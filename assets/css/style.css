@@ -69,7 +69,6 @@ header h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 50px;
 }
 
@@ -78,19 +77,14 @@ header h1 {
     width: 760px;
     height: 676px;
     background-color: #FFFFFF;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 .card-title {
 
     width: 90%;
     height: 138px;
-    margin: 20px auto 10px auto;
+    margin: 20px auto;
     background-color: #434CA0;
-    position: relative;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,9 +94,9 @@ header h1 {
 
     font-size: 23px;
     font-weight: 700;
+    text-align: center;
     line-height: 31px;
     color: #FFFFFF;
-    position: absolute;
     padding: 0 20px;
 }
 
@@ -120,6 +114,7 @@ header h1 {
 
     width: 330px;
     height: 176px;
+    object-fit: cover;
 }
 
 .card-content {
@@ -142,10 +137,7 @@ header h1 {
 
     width: 760px;
     height: 430px;
-    display: flex;
     margin-bottom: 50px;
-    flex-direction: column;
-    gap: 5px;
     background-color: #FFFFFF;
 }
 
@@ -160,8 +152,8 @@ header h1 {
     font-size: 23px;
     font-weight: 700;
     line-height: 30px;
+    text-align: center;
     color: #FFFFFF;
-    position: absolute;
     padding: 0 20px;
 }
 
@@ -176,7 +168,7 @@ header h1 {
 .final-card-content img {
 
     width: 364px;
-    height: 273;
+    height: 273px;
 }
 
 .final-card-content h4 {
