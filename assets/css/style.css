@@ -110,18 +110,19 @@ header h1 {
     justify-content: space-between;
 }
 
-.card-questions img {
-
-    width: 330px;
-    height: 176px;
-    object-fit: cover;
-}
-
 .card-content {
 
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.card-content img {
+
+    width: 330px;
+    height: 176px;
+    object-fit: cover;
+    cursor: pointer;
 }
 
 .card-content h4 {
@@ -131,6 +132,7 @@ header h1 {
     line-height: 26px;
     color: #000000;
     width: 320px;
+    cursor: pointer;
 }
 
 .quiz-page-final-card {
@@ -193,6 +195,21 @@ header h1 {
 
     cursor: pointer;
     font-size: 21px;
+}
+
+.card-opacity {
+
+    opacity: 0.3;
+}
+
+.wrong-answer h4 {
+
+    color: #FF4B4B;
+}
+
+.correct-answer h4 {
+
+    color: #009C22;
 }
 
 .reset-quiz {
