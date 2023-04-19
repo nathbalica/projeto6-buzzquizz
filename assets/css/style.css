@@ -8,7 +8,7 @@
 
 body {
 
-    padding: 90px 0;
+    padding: 70px 0;
     font-family: 'Roboto', sans-serif;
     background-color: #E5E5E5;
 }
@@ -21,7 +21,6 @@ header {
     top: 0;
     left: 0;
     background-color: #EC362D;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,4 +34,192 @@ header h1 {
     font-size: 38px;
     font-weight: 700;
     color: #FFFFFF;
+}
+
+.quiz-page-title {
+
+    width: 100%;
+    height: 228px;
+    margin-bottom: 50px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-page-title img {
+
+    width: 100%;
+    height: 100%;
+    max-height: 228px;
+    object-fit: fill;
+}
+
+.quiz-page-title h2 {
+
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 50px;
+    color: #FFFFFF;
+    position: absolute;
+}
+
+.quiz-page-content {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.quiz-page-card {
+
+    width: 760px;
+    height: 676px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-title {
+
+    width: 90%;
+    height: 138px;
+    margin: 20px auto 10px auto;
+    background-color: #434CA0;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-title h3 {
+
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 31px;
+    color: #FFFFFF;
+    position: absolute;
+    padding: 0 20px;
+}
+
+.card-questions {
+
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.card-questions img {
+
+    width: 330px;
+    height: 176px;
+}
+
+.card-content {
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-content h4 {
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    color: #000000;
+    width: 320px;
+}
+
+.quiz-page-final-card {
+
+    width: 760px;
+    height: 430px;
+    display: flex;
+    margin-bottom: 50px;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #FFFFFF;
+}
+
+.quiz-page-final-card .card-title {
+
+    height: 100px;
+    background-color: #EC362D;
+}
+
+.quiz-page-final-card h3 {
+
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 30px;
+    color: #FFFFFF;
+    position: absolute;
+    padding: 0 20px;
+}
+
+.final-card-content {
+
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    gap: 15px;
+}
+
+.final-card-content img {
+
+    width: 364px;
+    height: 273;
+}
+
+.final-card-content h4 {
+
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    color: #484848;
+}
+
+.quiz-page-buttons {
+
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.quiz-page-buttons button {
+
+    cursor: pointer;
+    font-size: 21px;
+}
+
+.reset-quiz {
+
+    color: #FFF5F4;
+    width: 260px;
+    height: 52px;
+    background: #EC362D;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+}
+
+.return-home {
+
+    color: #818181;
+    width: 260px;
+    height: 52px;
+    background: none;
+    border: none;
+    outline: none;
 }
