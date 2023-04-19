@@ -8,7 +8,7 @@
 
 body {
 
-    padding: 90px 0;
+    /* padding: 90px 0; */
     font-family: 'Roboto', sans-serif;
     background-color: #E5E5E5;
 }
@@ -36,3 +36,187 @@ header h1 {
     font-weight: 700;
     color: #FFFFFF;
 }
+
+/* -----------------------------------Tela de um Quiz apenas ------------------------------------ */
+
+.cover{
+    width: 100%;
+    height: 227px;
+    position: relative;
+    margin-top: 69px;
+}
+
+.cover img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cover h3{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    font-weight: 400;
+    font-size: 39px;
+    color: #FFFFFF;
+}
+
+.questions{
+    width: 100%;
+    max-width: 684px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.questions .question{
+    background-color: #FFFFFF;
+    margin-bottom: 60px;
+}
+
+.questions .question:nth-child(1){
+    margin-top: 60px;
+}
+
+.title-question{
+    width: 100%;
+    height: 138px;
+    background-color: blueviolet;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #FFFFFF;
+    font-size: 23px;
+    font-weight: 700;
+
+    margin-bottom: 20px;
+    word-break: break-all;
+    /* padding: 0 20px; */
+}
+
+.answer-options{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.answer-options .option{
+    display: flex;
+    flex-direction: column;
+    flex-basis: calc(50% - 15px);
+    cursor: pointer;
+}
+
+.answer-options .option img{
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+}
+
+.option h3{
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+    padding: 10px 0 20px;
+
+}
+
+.correct-answer h3{
+    color: #009C22;
+}
+
+.wrong-answer{
+    color: #FF4B4B;
+}
+
+.opacity-img{
+    opacity: 0.4;
+}
+
+.result{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    max-width: 684px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+.result-title{
+    background-color: #EC362D;
+    width: 100%;
+    height: 99px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+.result-answer{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.result-answer img{
+    width: 100%;
+    height: 273px;
+    object-fit: cover;
+}
+
+.result-answer p{
+    padding: 0 20px 20px 20px;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 25px;
+}
+
+.result button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 260px;
+    height: 52px;
+    border-radius: 15px;
+    font-size: 21px;
+    cursor: pointer;
+    border: none;
+}
+
+.restart{
+    background-color: #EC362D;
+    color: #FFFFFF;
+}
+
+.return-home{
+    margin-top: 5px;
+    color: #818181;
+    background-color: transparent;
+}
+
+.result button:hover {
+    filter: brightness(0.9);
+}
+
+
+
+
