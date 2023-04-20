@@ -1,3 +1,4 @@
+let userQuizResult;
 let quiz = [];
 
 const url = 'https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes';
@@ -8,7 +9,11 @@ axios.defaults.headers.common['Authorization'] = token;
 function getQuizById(id) {
 
     axios.get(`${url}/${id}`)
-    .then(renderQuiz)
+    .then(res => {
+
+        quiz = res.data;
+        renderQuiz();
+    })
     .catch(err => {
 
         if (err.response.status === 404) {
@@ -20,11 +25,11 @@ function getQuizById(id) {
     });
 }
 
-getQuizById(5);
+getQuizById(21);
 
-function renderQuiz(res) {
+function renderQuiz() {
 
-    quiz = res.data
+    userQuizResult = 0;
     
     /* Creates quiz title */
     const quizTitle = document.querySelector(".quiz-page-title");
@@ -36,6 +41,12 @@ function renderQuiz(res) {
     const quizContent = document.querySelector(".quiz-page-content");
     quizContent.innerHTML = "";
 
+    /* Shuffles answers */
+    quiz.questions.map(question => {
+        return question.answers.sort(() => {return Math.random() - 0.5});
+    });
+
+    let questionIndex = 0;
     quiz.questions.forEach(question => {
 
         /* Creates quiz card */
@@ -44,31 +55,33 @@ function renderQuiz(res) {
                 <div class="card-title">
                     <h3>${question.title}</h3>
                 </div>
-            <div class="card-questions">
+            <div class="card-questions question-${questionIndex}">
         `;
 
-        /* Shuffles answers */
-        const questionAwnsers = question.answers;
-        questionAwnsers.sort(() => { 
-            return Math.random() - 0.5
-        });
-
-        /* Creates question awnsers */
+        let awnserIndex = 0;
         let cardContent = "";
+
+        const questionAwnsers = question.answers;
         questionAwnsers.forEach(awnser => {
 
+            /* Creates question awnsers */
             cardContent += `
-                <div class="card-content" onclick="selectCard(this)">
+                <div class="card-content awnser-${awnserIndex}" onclick="selectCard(this)">
                     <img src="${awnser.image}"/>
                     <h4>${awnser.text}</h4>
                 </div>
             `;
+            awnserIndex++;
         });
 
         /* Render quiz page content */
         quizContent.innerHTML += cardTitle + cardContent;
+        questionIndex++;
     });
-    console.log(quiz);
+}
+
+function getCardIndexByClassList(card) {
+    return Number(card.classList[1].split("-")[1]);
 }
 
 function selectCard(selector) {
@@ -76,27 +89,39 @@ function selectCard(selector) {
     const parentNode = selector.parentNode;
     if (!parentNode.classList.contains("selected-card")) {
 
-        /*  To-do: Check boolean value from server (isCorrectAnswer) */
+        const questionIndex = getCardIndexByClassList(parentNode);
+        const selectedCardIndex = getCardIndexByClassList(selector);
+        const quizAnwsers =  quiz.questions[questionIndex].answers;
+        
+        /* Correct answer by user */
+        if (quizAnwsers[selectedCardIndex].isCorrectAnswer) {
+            userQuizResult += (1 / quiz.questions.length) * 100;
+        }
 
         const cards = parentNode.querySelectorAll(".card-content");
-        cards.forEach(card => {
+        for (let i = 0; i < cards.length; i++) {
 
-            if (card.innerHTML !== selector.innerHTML) {
+            const card = cards[i];
+            
+            if (i !== selectedCardIndex) {
                 card.classList.add("card-opacity");
             }
 
-            if (card.classList.contains("isCorrectAnswer")) {
+            if (quizAnwsers[i].isCorrectAnswer) {
                 card.classList.add("correct-answer");
             }
             else {
                 card.classList.add("wrong-answer");
             }
-        });
+        }
         parentNode.classList.add("selected-card");
     }
 }
 
 function resetQuiz() {
+
+    userQuizResult = Math.round(userQuizResult);
+    alert(`Pontuação Final: ${userQuizResult}`);
 
     /*  Get all question cards from quiz page content and reset 
      *  classes and styles from selectCard function. */
@@ -113,7 +138,7 @@ function resetQuiz() {
                 card.classList.remove("card-opacity");
             }
 
-            if (card.classList.contains("isCorrectAnswer")) {
+            if (card.classList.contains("correct-answer")) {
                 card.classList.remove("correct-answer");
             }
             else {
@@ -121,4 +146,5 @@ function resetQuiz() {
             }
         });
     });
+    renderQuiz();
 }
