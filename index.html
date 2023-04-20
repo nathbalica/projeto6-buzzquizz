@@ -14,7 +14,76 @@
         <h1>BuzzQuizz</h1>
     </header>
     
-    <h2>Olá mundo</h2>
+    <div class="quiz-page-title">
+        <img src="./assets/images/quiz-page/potterhead.png"/>
+        <h2>O quão Potterhead é você?</h2>
+    </div>
+
+    <main class="quiz-page-content">
+        <div class="quiz-page-card">
+            <div class="card-title">
+                <h3>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</h3>
+            </div>
+            <div class="card-questions">
+                <div class="card-content" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/image 3.png"/>
+                    <h4>Gatíneo</h4>
+                </div>
+                <div class="card-content" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/image 4.png"/>
+                    <h4>Ratata</h4>
+                </div>
+                <div class="card-content" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/image 7.png"/>
+                    <h4>Sapo gordo</h4>
+                </div>
+                <div class="card-content isCorrectAnswer" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/image 8.png"/>
+                    <h4>Mustela putorius (o Furão)</h4>
+                </div>
+            </div>
+        </div>
+        <div class="quiz-page-card">
+            <div class="card-title">
+                <h3>Qual dos objetos abaixo NÃO é uma horcrux?</h3>
+            </div>
+            <div class="card-questions">
+                <div class="card-content" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/Rectangle 38.png"/>
+                    <h4>The boy who lived</h4>
+                </div>
+                <div class="card-content isCorrectAnswer" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/Rectangle 39.png"/>
+                    <h4>O livro monstruoso dos monstros</h4>
+                </div>
+                <div class="card-content" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/Rectangle 40.png"/>
+                    <h4>Anel velho</h4>
+                </div>
+                <div class="card-content" onclick="selectCard(this)">
+                    <img src="./assets/images/quiz-page/Rectangle 41.png"/>
+                    <h4>Diadema da Ravenclaw</h4>
+                </div>
+            </div>
+        </div>
+        <div class="quiz-page-final-card">
+            <div class="card-title">
+                <h3>88% de acerto: Você é praticamente um aluno de Hogwarts!</h3>
+            </div>
+            <div class="final-card-content">
+                <img src="./assets/images/quiz-page/image 10.png"/>
+                <h4>
+                    Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique 
+                    no botão abaixo para usar o vira-tempo e reiniciar este teste.
+                </h4>
+            </div>
+        </div>
+    </main>
+
+    <div class="quiz-page-buttons">
+        <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quizz</button>
+        <button class="return-home">Voltar pra home</button>
+    </div>
 
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
