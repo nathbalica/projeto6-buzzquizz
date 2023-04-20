@@ -1,3 +1,75 @@
+let quiz = [];
+
+const url = 'https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes';
+const token = 'aNWJQMxCMeOOL5Y0ThO5bESy'
+
+axios.defaults.headers.common['Authorization'] = token;
+
+function getQuizById(id) {
+
+    axios.get(`${url}/${id}`)
+    .then(renderQuiz)
+    .catch(err => {
+
+        if (err.response.status === 404) {
+            alert("ID invalido!");
+        }
+        else {
+            alert("Erro Interno do Servidor!");
+        }
+    });
+}
+
+getQuizById(5);
+
+function renderQuiz(res) {
+
+    quiz = res.data
+    
+    /* Creates quiz title */
+    const quizTitle = document.querySelector(".quiz-page-title");
+    quizTitle.innerHTML = `
+        <img src="${quiz.image}"/>
+        <h2>${quiz.title}</h2>
+    `;
+
+    const quizContent = document.querySelector(".quiz-page-content");
+    quizContent.innerHTML = "";
+
+    quiz.questions.forEach(question => {
+
+        /* Creates quiz card */
+        const cardTitle = `
+            <div class="quiz-page-card">
+                <div class="card-title">
+                    <h3>${question.title}</h3>
+                </div>
+            <div class="card-questions">
+        `;
+
+        /* Shuffles answers */
+        const questionAwnsers = question.answers;
+        questionAwnsers.sort(() => { 
+            return Math.random() - 0.5
+        });
+
+        /* Creates question awnsers */
+        let cardContent = "";
+        questionAwnsers.forEach(awnser => {
+
+            cardContent += `
+                <div class="card-content" onclick="selectCard(this)">
+                    <img src="${awnser.image}"/>
+                    <h4>${awnser.text}</h4>
+                </div>
+            `;
+        });
+
+        /* Render quiz page content */
+        quizContent.innerHTML += cardTitle + cardContent;
+    });
+    console.log(quiz);
+}
 
 function selectCard(selector) {
 
