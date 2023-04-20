@@ -1,3 +1,4 @@
+axios.defaults.headers.common['Authorization'] = 'K5VZywRMz64MgFSgrwcQkrir';
 
 function selectCard(selector) {
 

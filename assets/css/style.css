@@ -329,6 +329,7 @@ header h1 {
     #000000 100%
   );
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .quiz img {

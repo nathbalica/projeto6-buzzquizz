@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>BuzzQuizz</title>
 </head>
-<body>
+<body onload="getQuizzes()">
 
     <header>
         <h1>BuzzQuizz</h1>
@@ -20,14 +20,14 @@
                 <div class="message-container">
                     Você não criou nenhum quizz ainda :(
                 </div>
-                <div class="create-quiz-btn">
+                <div class="create-quiz-btn" onclick="displayThirdPage()">
                     <p>Criar Quizz</p>
                 </div>
             </div>
             <div class="user-quizzes-container-regular hidden">
                 <div class="header">
                     <h1>Seus quizzes</h1>
-                    <ion-icon name="add-circle"></ion-icon>
+                    <ion-icon name="add-circle" onclick="displayThirdPage()"></ion-icon>
                 </div>
                 <div class="quizzes-container">
                     <div class="quiz">
@@ -43,30 +43,6 @@
             <div class="all-quizzes-container">
                 <h1>Todos os quizzes</h1>
                 <div class="quizzes-container">
-                    <div class="quiz">
-                        <img src="./assets/images/quiz-page/image 3.png" alt="">
-                        <h1>O quão potterhead é você?</h1>
-                    </div>
-                    <div class="quiz">
-                        <img src="./assets/images/quiz-page/potterhead.png" alt="">
-                        <h1>O quão potterhead é você?</h1>
-                    </div>
-                    <div class="quiz">
-                        <img src="./assets/images/quiz-page/potterhead.png" alt="">
-                        <h1>O quão potterhead é você?</h1>
-                    </div>
-                    <div class="quiz">
-                        <img src="./assets/images/quiz-page/potterhead.png" alt="">
-                        <h1>O quão potterhead é você?</h1>
-                    </div>
-                    <div class="quiz">
-                        <img src="./assets/images/quiz-page/potterhead.png" alt="">
-                        <h1>O quão potterhead é você?</h1>
-                    </div>
-                    <div class="quiz">
-                        <img src="./assets/images/quiz-page/potterhead.png" alt="">
-                        <h1>O quão potterhead é você?</h1>
-                    </div>
                 </div>
             </div>
         </div>
@@ -148,5 +124,6 @@
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/first-page.js"></script>
 </body>
 </html>
