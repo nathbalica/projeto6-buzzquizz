@@ -12,6 +12,7 @@ function getQuizById(id) {
     .then(res => {
 
         quiz = res.data;
+        /* toggleQuizPage(); */
         renderQuiz();
     })
     .catch(err => {
@@ -25,8 +26,6 @@ function getQuizById(id) {
     });
 }
 
-getQuizById(21);
-
 function renderQuiz() {
 
     userQuizResult = 0;
@@ -34,9 +33,13 @@ function renderQuiz() {
     /* Creates quiz title */
     const quizTitle = document.querySelector(".quiz-page-title");
     quizTitle.innerHTML = `
-        <img src="${quiz.image}"/>
+        <div class="image-overlay">
+            <img src="${quiz.image}"/>
+        </div>
         <h2>${quiz.title}</h2>
     `;
+
+    quizTitle.scrollIntoView();
 
     const quizContent = document.querySelector(".quiz-page-content");
     quizContent.innerHTML = "";
@@ -47,7 +50,11 @@ function renderQuiz() {
     });
 
     let questionIndex = 0;
+    const colors = [];
+
     quiz.questions.forEach(question => {
+
+        colors.push(question.color);
 
         /* Creates quiz card */
         const cardTitle = `
@@ -78,31 +85,109 @@ function renderQuiz() {
         quizContent.innerHTML += cardTitle + cardContent;
         questionIndex++;
     });
+
+    /* Render cardTitles background color */
+    const cardTitles = quizContent.querySelectorAll(".card-title");
+    for (let i = 0; i < cardTitles.length; i++) {
+
+        const cardTitle = cardTitles[i];
+        cardTitle.style.setProperty('background-color', colors[i]);
+    }
+}
+
+function renderFinalResult() {
+
+    userQuizResult = Math.round(userQuizResult);
+
+    /* Sort minValues */
+    const quizLevels = quiz.levels.sort((a, b) => {return (a.minValue - b.minValue)});
+
+    let userLevel;
+
+    /* Search user level */
+    if (userQuizResult >= quizLevels[quizLevels.length - 1].minValue) {
+        userLevel = quizLevels.length - 1;
+    }
+    else {
+
+        for (let i = 0; i < quizLevels.length; i++) {
+
+            if (userQuizResult <= quizLevels[i].minValue) {
+                userLevel = i;
+                break;
+            }
+        }
+    }
+
+    /* Render quiz final card */
+    const quizContent = document.querySelector(".quiz-page-content");
+    quizContent.innerHTML += `
+        <div class="quiz-page-final-card">
+            <div class="card-title">
+                <h3>${userQuizResult}% de acerto: ${quizLevels[userLevel].title}</h3>
+            </div>
+            <div class="final-card-content">
+                <img src="${quizLevels[userLevel].image}"/>
+                <h4>${quizLevels[userLevel].text}</h4>
+            </div>
+        </div>
+    `;
+
+    document.querySelector(".quiz-page-buttons").classList.remove("hidden");
+    quizContent.querySelector(".quiz-page-final-card").scrollIntoView();
+}
+
+function scrollToNextQuestion() {
+
+    const selectedCards = document.querySelectorAll(".selected-card");
+    const selectedCardsIds = [];
+
+    selectedCards.forEach(card => {
+        selectedCardsIds.push(getCardIndexByClassList(card));
+    });
+
+    const quizPageCards = document.querySelectorAll(".quiz-page-card");
+    const cardQuestions = document.querySelectorAll(".card-questions");
+    
+    for (let i = 0; i < cardQuestions.length; i++) {
+        
+        const cardId = getCardIndexByClassList(cardQuestions[i]);
+        
+        if (cardId !== selectedCardsIds[i]) {
+            quizPageCards[i].scrollIntoView();
+            break;
+        }
+    }
 }
 
 function getCardIndexByClassList(card) {
+
+    /* Return index value from question/anwser card */
     return Number(card.classList[1].split("-")[1]);
 }
 
 function selectCard(selector) {
 
-    const parentNode = selector.parentNode;
-    if (!parentNode.classList.contains("selected-card")) {
+    const cardQuestion = selector.parentNode;
 
-        const questionIndex = getCardIndexByClassList(parentNode);
+    if (!cardQuestion.classList.contains("selected-card")) {
+
+        const questionIndex = getCardIndexByClassList(cardQuestion);
         const selectedCardIndex = getCardIndexByClassList(selector);
         const quizAnwsers =  quiz.questions[questionIndex].answers;
         
-        /* Correct answer by user */
+        /* Check user answer */
         if (quizAnwsers[selectedCardIndex].isCorrectAnswer) {
             userQuizResult += (1 / quiz.questions.length) * 100;
         }
 
-        const cards = parentNode.querySelectorAll(".card-content");
+        /* Apply style on cards according to user selection */
+        const cards = cardQuestion.querySelectorAll(".card-content");
+
         for (let i = 0; i < cards.length; i++) {
 
             const card = cards[i];
-            
+
             if (i !== selectedCardIndex) {
                 card.classList.add("card-opacity");
             }
@@ -114,14 +199,19 @@ function selectCard(selector) {
                 card.classList.add("wrong-answer");
             }
         }
-        parentNode.classList.add("selected-card");
+        cardQuestion.classList.add("selected-card");
+        setTimeout(scrollToNextQuestion, 2000);
+
+        const selectedCards = document.querySelectorAll(".selected-card");
+
+        /* Check if quiz endend */
+        if (selectedCards.length === quiz.questions.length) {
+            setTimeout(renderFinalResult, 2000);
+        }
     }
 }
 
 function resetQuiz() {
-
-    userQuizResult = Math.round(userQuizResult);
-    alert(`Pontuação Final: ${userQuizResult}`);
 
     /*  Get all question cards from quiz page content and reset 
      *  classes and styles from selectCard function. */
@@ -146,5 +236,14 @@ function resetQuiz() {
             }
         });
     });
+
+    document.querySelector(".quiz-page-buttons").classList.add("hidden");
     renderQuiz();
 }
+
+function toggleQuizPage() {
+    
+    document.querySelector(".quiz-page-container").classList.toggle("hidden");
+}
+
+getQuizById(71);
