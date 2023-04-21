@@ -1,3 +1,7 @@
+
+axios.defaults.headers.common['Authorization'] = 'aNWJQMxCMeOOL5Y0ThO5bESy';
+
+
 const contentQuizz = document.querySelector(".container");
 let createQuizz;
 let listQuestions = [];
@@ -32,15 +36,10 @@ startQuizz()
 
 function validBasicQuizzInformation(){
 
-    // const title = document.querySelector(".title-input").value;
-    // const url = document.querySelector(".url").value;
-    // const amountQuestions = document.querySelector('.inputs .amount-questions').value;
-    // const amountLevels = document.querySelector(".amount-levels").value;
-
-    const title = "fdgggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag";
-    const url = "https://http.cat/411.jpg";
-    const amountQuestions = 3;
-    const amountLevels = 3;
+    const title = document.querySelector(".title-input").value;
+    const url = document.querySelector(".url").value;
+    const amountQuestions = document.querySelector('.inputs .amount-questions').value;
+    const amountLevels = document.querySelector(".amount-levels").value;
 
 
     createQuizz.title = title;
@@ -71,7 +70,7 @@ function validBasicQuizzInformation(){
 }
 
 function validateUrl(url) {
-    return url.match(/^https:\/\/.*\.(jpg|jpeg|png)$/i);
+    return url.match(/^(?:(?:https?):\/\/)?(?:[\w-]+\.)+[a-z]{2,12}(?:\/(?:[\w_.-]+)?)*(?:\?(?:[\w-]+=[\w-]+(?:&[\w-]+=[\w-]+)*))?(?:#[\w-]+)?$/i);
   }
 
 function inputQuizzQuestions(){
@@ -85,7 +84,7 @@ function inputQuizzQuestions(){
         // Validação do texto da pergunta
         if (dataQuestions.title.length < 20) {
             alert("Por favor, insira um texto de pergunta com no mínimo 20 caracteres");
-            return;
+            return false;
         }
 
         dataQuestions.color = document.querySelector(`.question-${i}-color`).value
@@ -93,7 +92,7 @@ function inputQuizzQuestions(){
         // Validação da cor de fundo
         if (!dataQuestions.color.match(/^#[0-9A-F]{6}$/i)) {
             alert("Por favor, insira uma cor em formato hexadecimal (exemplo: #FFA500)");
-            return;
+            return false;
         }
 
         dataQuestions.answers = [];
@@ -108,23 +107,23 @@ function inputQuizzQuestions(){
         // Validação da resposta correta
         if (answersCorrect.text === "" || answersCorrect.image === "" || !isValidAnswerImage) {
             alert("Por favor, preencha os dados da resposta correta corretamente");
-            return;
+            return false;
         }
 
         dataQuestions.answers.push(answersCorrect)
 
-        for(let j = 1; j <= 3; i++){
+        for(let j = 0; j <= 2; j++){
             let answersIncorrect = {
-                "text": document.querySelector(`.question-${i}-correct-answer${j} .answer`).value,
-                "image": document.querySelector(`.question-${i}-correct-answer${j} .url`).value,
+                "text": document.querySelector(`.question-${i}-incorrect-answer${j} .answer`).value,
+                "image": document.querySelector(`.question-${i}-incorrect-answer${j} .url`).value,
                 "isCorrectAnswer": false
             }
 
-            const isValidAnswerImage = validateUrl(answersCorrect.image);
+            const isNotValidAnswerImage = validateUrl(answersCorrect.image);
             // Validação das respostas incorretas
-            if (answersIncorrect.text === "" || answersIncorrect.image === "" || !isValidAnswerImage) {
+            if (answersIncorrect.text === "" || answersIncorrect.image === "" || !isNotValidAnswerImage) {
                 alert("Por favor, preencha os dados de todas as respostas incorretas corretamente");
-                return;
+                return false;
             }
 
             dataQuestions.answers.push(answersIncorrect)
@@ -132,17 +131,18 @@ function inputQuizzQuestions(){
 
         if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer).length === 0) {
             alert("Por favor, selecione a resposta correta para a pergunta");
-            return;
+            return false;
           }
           
           if (dataQuestions.answers.length < 2) {
             alert("Por favor, insira pelo menos 2 respostas para a pergunta");
-            return;
+            return false;
           }
 
         listQuestions.push(dataQuestions)
-
+    
     }
+    return true;
 }
 
 
@@ -234,25 +234,28 @@ function renderQuestionsRepeated(index){
 
 
 function inputQuizzLevels(){
+    listLevels = [];
     const numberLevels = createQuizz.amountLevels;
+    let hasZeroPercentLevel = false;
+    console.log(numberLevels)
     for(let i = 1; i <= numberLevels; i++){
-        let dataLevels = {
-            "title": document.querySelector(`.level-${i} .nivel-text`).value,
-            "image": document.querySelector(`.level-${i} .nivel-url`).value,
-            "text": document.querySelector(`.level-${i} .nivel-description`).value,
-            "minValue": parseInt(document.querySelector(`.level-${i} .nivel-hits`).value)
+        const dataLevels = {
+            "title": document.querySelector(`.nivel${i}-text`).value,
+            "image": document.querySelector(`.nivel${i}-url`).value,
+            "text": document.querySelector(`.nivel${i}-description`).value,
+            "minValue": parseInt(document.querySelector(`.nivel${i}-hits`).value)
         };
 
-            // Validando Título do nível
+        // Validando Título do nível
         if (dataLevels.title.length < 10) {
             alert("O título do nível deve ter no mínimo 10 caracteres.");
-            return;
+            return false;
         }
     
         // Validando % de acerto mínima
         if (dataLevels.minValue < 0 || dataLevels.minValue > 100) {
             alert("A % de acerto mínima deve ser um número entre 0 e 100.");
-            return;
+            return false;
         }
     
         if (dataLevels.minValue === 0) {
@@ -262,30 +265,36 @@ function inputQuizzLevels(){
         // Validando URL da imagem do nível
         if (!validateUrl(dataLevels.image)) {
             alert("A URL da imagem do nível deve ter formato de URL.");
-            return;
+            return false;
         }
     
         // Validando Descrição do nível
         if (dataLevels.text.length < 30) {
             alert("A descrição do nível deve ter no mínimo 30 caracteres.");
-            return;
+            return false;
         }
+
         listLevels.push(dataLevels)
+
     }
-  
+
+
     if (!hasZeroPercentLevel) {
       alert("É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%.");
-      return;
+      return false;
     }
+    return true;
 
 }
 
 
 
+
+
 function getLevelsHTML(){
-    // if(!inputQuizzQuestions()){
-    //     return;
-    // }
+    if(!inputQuizzQuestions()){
+        return;
+    }
     const numberLevels = createQuizz.amountLevels;
     let levels = '';
     for(let i = 1; i <= numberLevels; i++){
@@ -303,7 +312,7 @@ function renderLevelsQuizz(){
     <div class="page-create-quizz">
     <h3 class="title">Agora, decida os níveis</h3>
         ${levelsHTML}
-        <button class="next-create-level">Finalizar Quizz</button>
+        <button class="next-create-level" onclick="validateInputLevels()">Finalizar Quizz</button>
     </div>
     `
 }
@@ -324,14 +333,54 @@ function renderLevelsRepeated(index){
             </div>
 
             <div class="content-questions ${wholeLevel}">
-                <div class="create-answers level-${index}">
-                    <input type="text" class="nivel-text" placeholder="Título do nível" />
-                    <input type="text" class="nivel-hits" placeholder="% de acerto mínima" />
-                    <input type="text" class="nivel-url" placeholder="URL da imagem do nível" />
-                    <input type="text" class="nivel-description" placeholder="Descrição do nível" />
+                <div class="create-answers">
+                    <input type="text" class="nivel${index}-text" placeholder="Título do nível" />
+                    <input type="text" class="nivel${index}-hits" placeholder="% de acerto mínima" />
+                    <input type="text" class="nivel${index}-url" placeholder="URL da imagem do nível" />
+                    <input type="text" class="nivel${index}-description" placeholder="Descrição do nível" />
                 </div>
 
             </div>
         </div>
+    `
+}
+
+function validateInputLevels(){
+    if(!inputQuizzLevels()){
+        return;
+    }
+
+    saveDataQuizz()
+}
+
+function saveDataQuizz(){
+    const saveData = {
+        title: createQuizz.title,
+        image: createQuizz.image,
+        questions: listQuestions,
+        levels: listLevels
+    }
+
+    console.log(saveData)
+    const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData)
+    promise.then(AnswerWorked)
+}
+
+function AnswerWorked(response){
+    console.log(response.data)
+}
+
+function renderAcessQuizz(){
+    contentQuizz.innerHTML = `
+    <div class="page-create-quizz">
+        <h3 class="title">Seu quizz está pronto!</h3>
+        <div class="quizz-preview">
+            <img src="${createQuizz.image}"/>
+            <h4 class="title-quizz">${createQuizz.title}</h4>
+        </div>
+        <button class="acess-quizz" onclick="validateInputLevels()">Acessar Quizz</button>
+        <button class="back-home">Voltar pra home</button>
+
+    </div>
     `
 }
