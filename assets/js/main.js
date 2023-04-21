@@ -363,12 +363,32 @@ function saveDataQuizz(){
 
     console.log(saveData)
     const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData)
-    promise.then(AnswerWorked)
+    promise.then(response => {
+        AnswerWorked(response);
+        storeUserCreatedQuizId(response.data.id);
+    });
 }
 
 function AnswerWorked(response){
-    console.log(response.data)
+    console.info(`Quiz ${response.data.key} criado com Sucesso!!!`)
+    return response.data
 }
+
+function storeUserCreatedQuizId(id) {
+    const storedIds = JSON.parse(localStorage.getItem("id")) || [];
+    const quizIndex = storedIds.findIndex(quiz => quiz.id === id);
+  
+    if (quizIndex === -1) {
+      storedIds.push({ id });
+      localStorage.setItem("id", JSON.stringify(storedIds));
+
+      renderAcessQuizz();
+    }
+  
+    return storedIds.map((quiz) => ({ id: quiz.id }));
+}
+
+
 
 function renderAcessQuizz(){
     contentQuizz.innerHTML = `
