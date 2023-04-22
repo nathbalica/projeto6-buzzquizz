@@ -14,21 +14,6 @@
         <a href="./"><h1>BuzzQuizz</h1></a>
     </header>
     
-    <div class="container hidden">
-    </div>
-
-
-
-    <div class="quiz-page-container hidden">
-        <div class="quiz-page-title"></div>
-        <main class="quiz-page-content">
-        </main>
-        <div class="quiz-page-buttons hidden">
-            <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quizz</button>
-            <button class="return-home" onclick="toggleQuizPage()">Voltar pra home</button>
-        </div>
-    </div>
-
     <div class="first-page-container">
         <div class="first-page-content">
             <div class="user-quizzes-container-empty">
@@ -52,6 +37,18 @@
             </div>
         </div>
     </div>
+
+    <div class="quiz-page-container hidden">
+        <div class="quiz-page-title"></div>
+        <main class="quiz-page-content">
+        </main>
+        <div class="quiz-page-buttons hidden">
+            <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quizz</button>
+            <button class="return-home" onclick="toggleQuizPage()">Voltar pra home</button>
+        </div>
+    </div>
+
+    <div class="container hidden"></div>
 
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
