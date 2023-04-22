@@ -382,7 +382,7 @@ function storeUserCreatedQuizId(id) {
       storedIds.push({ id });
       localStorage.setItem("id", JSON.stringify(storedIds));
 
-      renderAcessQuizz();
+      renderAcessQuizz(id);
     }
   
     return storedIds.map((quiz) => ({ id: quiz.id }));
@@ -390,7 +390,7 @@ function storeUserCreatedQuizId(id) {
 
 
 
-function renderAcessQuizz(){
+function renderAcessQuizz(id){
     contentQuizz.innerHTML = `
     <div class="page-create-quizz">
         <h3 class="title">Seu quizz está pronto!</h3>
