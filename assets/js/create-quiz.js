@@ -1,12 +1,9 @@
-
-// axios.defaults.headers.common['Authorization'] = 'aNWJQMxCMeOOL5Y0ThO5bESy';
 import { getQuizById } from "./quiz-page.js";
 
 const contentQuizz = document.querySelector(".container");
 let createQuizz;
 let listQuestions = [];
 let listLevels = [];
-
 
 function startQuizz(){
 
@@ -16,7 +13,6 @@ function startQuizz(){
         amountQuestions: 0,
         amountLevels: 0
     }
-    
     
     contentQuizz.innerHTML = `
         <div class="page-create-quizz">
@@ -29,10 +25,10 @@ function startQuizz(){
         </div>
         <button onclick="renderQuestionsQuizz()">Prosseguir pra criar perguntas</button>
         </div>
-    `
+    `;
 }
 
-startQuizz()
+startQuizz();
 
 function validBasicQuizzInformation(){
 
@@ -40,7 +36,6 @@ function validBasicQuizzInformation(){
     const url = document.querySelector(".url").value;
     const amountQuestions = document.querySelector('.inputs .amount-questions').value;
     const amountLevels = document.querySelector(".amount-levels").value;
-
 
     createQuizz.title = title;
     createQuizz.image = url;
@@ -66,12 +61,11 @@ function validBasicQuizzInformation(){
     }else{
         return true;
     }
-
 }
 
 function validateUrl(url) {
     return url.match(/^(?:(?:https?):\/\/)?(?:[\w-]+\.)+[a-z]{2,12}(?:\/(?:[\w_.-]+)?)*(?:\?(?:[\w-]+=[\w-]+(?:&[\w-]+=[\w-]+)*))?(?:#[\w-]+)?$/i);
-  }
+}
 
 function inputQuizzQuestions(){
 
@@ -79,7 +73,7 @@ function inputQuizzQuestions(){
     for(let i = 1; i <= numberQuestions; i++){
         let dataQuestions = {};
 
-        dataQuestions.title = document.querySelector(`.question-${i}-texto`).value
+        dataQuestions.title = document.querySelector(`.question-${i}-texto`).value;
 
         // Validação do texto da pergunta
         if (dataQuestions.title.length < 20) {
@@ -87,7 +81,7 @@ function inputQuizzQuestions(){
             return false;
         }
 
-        dataQuestions.color = document.querySelector(`.question-${i}-color`).value
+        dataQuestions.color = document.querySelector(`.question-${i}-color`).value;
 
         // Validação da cor de fundo
         if (!dataQuestions.color.match(/^#[0-9A-F]{6}$/i)) {
@@ -110,7 +104,7 @@ function inputQuizzQuestions(){
             return false;
         }
 
-        dataQuestions.answers.push(answersCorrect)
+        dataQuestions.answers.push(answersCorrect);
 
         for(let j = 0; j <= 2; j++){
             let answersIncorrect = {
@@ -126,26 +120,23 @@ function inputQuizzQuestions(){
                 return false;
             }
 
-            dataQuestions.answers.push(answersIncorrect)
+            dataQuestions.answers.push(answersIncorrect);
         }
 
         if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer).length === 0) {
             alert("Por favor, selecione a resposta correta para a pergunta");
             return false;
-          }
+        }
           
-          if (dataQuestions.answers.length < 2) {
+        if (dataQuestions.answers.length < 2) {
             alert("Por favor, insira pelo menos 2 respostas para a pergunta");
             return false;
-          }
+        }
 
-        listQuestions.push(dataQuestions)
-    
+        listQuestions.push(dataQuestions);
     }
     return true;
 }
-
-
 
 function getQuestionsHTML(){
     if(!validBasicQuizzInformation()){
@@ -154,13 +145,11 @@ function getQuestionsHTML(){
     const numberQuestions = createQuizz.amountQuestions;
     let questions = '';
     for(let i = 1; i <= numberQuestions; i++){
-        questions += renderQuestionsRepeated(i)
+        questions += renderQuestionsRepeated(i);
     }
 
-    return questions
-   
+    return questions;
 }
-
 
 function renderQuestionsQuizz(){
     let questionsHTML = getQuestionsHTML();
@@ -171,21 +160,20 @@ function renderQuestionsQuizz(){
         ${questionsHTML}
         <button class="next-create-level" onclick="renderLevelsQuizz()">Prosseguir pra criar níveis</button>
     </div>
-    `
+    `;
 }
 
 function toggleQuestion(event) {
     const icon = event.target;
     const content = icon.closest('.title-icon').nextElementSibling;
     content.classList.toggle('hidden');
-  }
-
+}
 
 function renderQuestionsRepeated(index){
 
     let wholeQuestion;
     if(index !== 1){
-        wholeQuestion = 'hidden'
+        wholeQuestion = 'hidden';
     }
 
     return `
@@ -229,9 +217,8 @@ function renderQuestionsRepeated(index){
 
             </div>
         </div>
-    `
+    `;
 }
-
 
 function inputQuizzLevels(){
     listLevels = [];
@@ -274,8 +261,7 @@ function inputQuizzLevels(){
             return false;
         }
 
-        listLevels.push(dataLevels)
-
+        listLevels.push(dataLevels);
     }
 
 
@@ -284,12 +270,7 @@ function inputQuizzLevels(){
       return false;
     }
     return true;
-
 }
-
-
-
-
 
 function getLevelsHTML(){
     if(!inputQuizzQuestions()){
@@ -298,11 +279,10 @@ function getLevelsHTML(){
     const numberLevels = createQuizz.amountLevels;
     let levels = '';
     for(let i = 1; i <= numberLevels; i++){
-        levels += renderLevelsRepeated(i)
+        levels += renderLevelsRepeated(i);
     }
 
-    return levels
-   
+    return levels;
 }
 
 function renderLevelsQuizz(){
@@ -314,14 +294,14 @@ function renderLevelsQuizz(){
         ${levelsHTML}
         <button class="next-create-level" onclick="validateInputLevels()">Finalizar Quizz</button>
     </div>
-    `
+    `;
 }
 
 
 function renderLevelsRepeated(index){
     let wholeLevel;
     if(index !== 1){
-        wholeLevel = 'hidden'
+        wholeLevel = 'hidden';
     }
     return `
         <div class="subtitle inputs">
@@ -339,10 +319,9 @@ function renderLevelsRepeated(index){
                     <input type="text" class="nivel${index}-url" placeholder="URL da imagem do nível" />
                     <input type="text" class="nivel${index}-description" placeholder="Descrição do nível" />
                 </div>
-
             </div>
         </div>
-    `
+    `;
 }
 
 function validateInputLevels(){
@@ -350,7 +329,7 @@ function validateInputLevels(){
         return;
     }
 
-    saveDataQuizz()
+    saveDataQuizz();
 }
 
 function saveDataQuizz(){
@@ -361,8 +340,8 @@ function saveDataQuizz(){
         levels: listLevels
     }
 
-    console.log(saveData)
-    const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData)
+    console.log(saveData);
+    const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData);
     promise.then(response => {
         AnswerWorked(response);
         storeUserCreatedQuizId(response.data.id);
@@ -370,8 +349,8 @@ function saveDataQuizz(){
 }
 
 function AnswerWorked(response){
-    console.info(`Quiz ${response.data.key} criado com Sucesso!!!`)
-    return response.data
+    console.info(`Quiz ${response.data.key} criado com Sucesso!!!`);
+    return response.data;
 }
 
 function storeUserCreatedQuizId(id) {
@@ -388,8 +367,6 @@ function storeUserCreatedQuizId(id) {
     return storedIds.map((quiz) => ({ id: quiz.id }));
 }
 
-  
-
 function renderAcessQuizz(id){
     contentQuizz.innerHTML = `
     <div class="page-create-quizz">
@@ -402,12 +379,7 @@ function renderAcessQuizz(id){
         <button class="back-home">Voltar pra home</button>
 
     </div>
-    `
+    `;
 }
 
-export { startQuizz }
-window.getQuizById = getQuizById;
-window.validateInputLevels = validateInputLevels;
-window.toggleQuestion = toggleQuestion;
-window.renderLevelsQuizz = renderLevelsQuizz;
-window.renderQuestionsQuizz = renderQuestionsQuizz;
+export { startQuizz, validateInputLevels, toggleQuestion, renderLevelsQuizz, renderQuestionsQuizz };

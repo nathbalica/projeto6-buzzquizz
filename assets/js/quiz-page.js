@@ -1,18 +1,15 @@
+import { getCardIndexByClassList } from "./main.js";
+
 let userQuizResult;
 let quiz = [];
 
 const url = 'https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes';
-const token = 'aNWJQMxCMeOOL5Y0ThO5bESy'
-
-axios.defaults.headers.common['Authorization'] = token;
 
 function getQuizById(id) {
-    const firstPageContainer = document.querySelector(".first-page-container");
-    firstPageContainer.classList.add('hidden')
-    const createPageContainer = document.querySelector(".container");
-    createPageContainer.classList.add('hidden')
-    const quizPageContainer = document.querySelector('.quiz-page-container')
-    quizPageContainer.classList.remove('hidden')
+
+    document.querySelector(".first-page-container").classList.add('hidden');
+    document.querySelector(".container").classList.add('hidden');
+    document.querySelector('.quiz-page-container').classList.remove('hidden');
 
     axios.get(`${url}/${id}`)
     .then(res => {
@@ -165,12 +162,6 @@ function scrollToNextQuestion() {
     }
 }
 
-function getCardIndexByClassList(card) {
-
-    /* Return index value from question/anwser card */
-    return Number(card.classList[1].split("-")[1]);
-}
-
 function selectCard(selector) {
 
     const cardQuestion = selector.parentNode;
@@ -253,4 +244,4 @@ function toggleQuizPage() {
     document.body.scrollTo(0, 0);
 }
 
-export { getQuizById, selectCard, resetQuiz, toggleQuizPage }
+export { getQuizById, selectCard, resetQuiz, toggleQuizPage };

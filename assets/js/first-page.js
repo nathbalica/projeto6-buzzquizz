@@ -1,5 +1,6 @@
+import { startAxios, getCardIndexByClassList } from "./main.js";
 import { getQuizById } from "./quiz-page.js";
-import { startQuizz } from "./create-quiz.js"
+import { startQuizz } from "./create-quiz.js";
 
 const allQuizzesContainer = document.querySelector(".all-quizzes-container .quizzes-container");
 const userQuizzesContainer = document.querySelector(".user-quizzes-container-regular .quizzes-container");
@@ -7,6 +8,7 @@ const quizPageContainer = document.querySelector(".quiz-page-container");
 const firstPageContainer = document.querySelector(".first-page-container");
 const createQuizcontainer = document.querySelector(".container");
 
+startAxios();
 getQuizzes();
 
 function getQuizzes() {
@@ -22,24 +24,17 @@ function displayQuizzes(quizzes) {
     userQuizzesContainer.innerHTML = '';
     Array.from(quizzes.data).forEach(quiz => {
         allQuizzesContainer.innerHTML += `
-                                        <div class="quiz id-${quiz.id}" onclick="displaySecondPage(this)">
-                                            <img src="${quiz.image}" alt="">
-                                            <h1>${quiz.title}</h1>
-                                        </div>
+            <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                <img src="${quiz.image}" alt="">
+                <h1>${quiz.title}</h1>
+            </div>
         `;
     });
 }
 
-function getCardIndexByClassList(card) {
-
-    /* Return index value from question/anwser card */
-    return Number(card.classList[1].split("-")[1]);
-}
-
-function displaySecondPage(selector) {
+function displayQuizPage(selector) {
 
     const quizId = getCardIndexByClassList(selector);
-
     firstPageContainer.classList.add("hidden");
     quizPageContainer.classList.remove("hidden");
 
@@ -50,10 +45,8 @@ function createQuizz() {
 
     firstPageContainer.classList.add("hidden");
     createQuizcontainer.classList.remove("hidden");
-    startQuizz()
+
+    startQuizz();
 }
 
-export { getQuizzes, displayQuizzes, displaySecondPage, createQuizz }
-
-window.displaySecondPage = displaySecondPage;
-window.createQuizz = createQuizz;
+export { getQuizzes, displayQuizzes, displayQuizPage, createQuizz };
