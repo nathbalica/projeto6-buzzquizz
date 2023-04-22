@@ -7,6 +7,12 @@ const token = 'aNWJQMxCMeOOL5Y0ThO5bESy'
 axios.defaults.headers.common['Authorization'] = token;
 
 function getQuizById(id) {
+    const firstPageContainer = document.querySelector(".first-page-container");
+    firstPageContainer.classList.add('hidden')
+    const createPageContainer = document.querySelector(".container");
+    createPageContainer.classList.add('hidden')
+    const quizPageContainer = document.querySelector('.quiz-page-container')
+    quizPageContainer.classList.remove('hidden')
 
     axios.get(`${url}/${id}`)
     .then(res => {

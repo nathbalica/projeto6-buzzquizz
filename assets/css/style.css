@@ -6,10 +6,12 @@
 }
 
 body {
-  padding: 70px 0;
-  font-family: "Roboto", sans-serif;
-  background-color: #fafafa;
+
+    padding: 70px 0;
+    font-family: 'Roboto', sans-serif;
+    background-color:#FFFFFF;
 }
+
 
 header {
   width: 100%;
@@ -40,7 +42,6 @@ header h1 {
 }
 
 /*-----------------------------------------------------------QUIZ PAGE STYLE-----------------------------------------------------------------------------------*/
-
 .quiz-page-title {
 
     margin-bottom: 50px;
@@ -170,9 +171,8 @@ header h1 {
     line-height: 30px;
     text-align: center;
     color: #FFFFFF;
-    padding: 0 20px;
-    word-break: break-word;
 }
+
 
 .final-card-content {
     width: 90%;
@@ -227,6 +227,155 @@ header h1 {
   border: none;
   outline: none;
 }
+
+
+/* ------------------------------------------create Quiz ------------------------------------------------------------- */
+
+.page-create-quizz{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: 63px auto;
+
+}
+
+.page-create-quizz .title{
+   text-align: center;
+   font-size: 23px;
+   font-weight: 700;
+   margin-bottom: 27px;
+}
+
+.page-create-quizz .inputs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    padding: 16px;
+}
+
+.page-create-quizz input{
+    width: 100%;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 9px;
+    font-size: 19px;
+
+    font-weight: 400;
+}
+
+.page-create-quizz input:last-child{
+    margin-bottom: inherit;
+}
+
+.page-create-quizz input::placeholder{
+    font-style: italic;
+    color: #BABABA;
+}
+
+.page-create-quizz button{
+    width: 369px;
+    height: 54px;
+    background-color: #EC362D;
+    color: #FFFFFF;
+    border-radius: 15px;
+    font-size: 21px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    align-self: center;
+    margin-top: 109px;
+    cursor: pointer;
+}
+
+
+.page-create-quizz .quizz-preview{
+    margin: 46px auto auto auto;
+    width: 500px;
+    height: 266px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 40px;
+    cursor: pointer;
+    background-color: aqua;
+}
+
+.quizz:hover {
+    filter: brightness(0.9);
+}
+
+.quizz-preview img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.62%, rgba(0, 0, 0, 0.8) 100%)
+}
+
+.quizz-preview .title-quizz {
+    padding: 20px;
+    color: #FFFFFF;
+    font-size: 20px;
+    
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    word-break: break-all;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+  }
+
+.page-create-quizz button:hover{
+    /* transform: scale(1.1);
+    transition: all 0.5s; */
+    transition: 0.3s;
+    opacity: 0.7;
+}
+
+.page-create-quizz .inputs .title-icon{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.title-icon ion-icon{
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.subtitle-answer{
+    font-size: 20px;
+    font-weight: 700;
+    padding-bottom: 15px;
+}
+
+.create-answers{
+    padding-bottom: 25px;
+
+}
+
+
+.page-create-quizz .acess-quizz{
+    margin: 45px 0 0;
+}
+
+.page-create-quizz .back-home{
+    margin: 10px 0 0;
+    background-color: transparent;
+    color:#818181;
+}
+
+
+
 
 /*-----------------------------------------------------------FIRST PAGE STYLE-----------------------------------------------------------------------------------*/
 

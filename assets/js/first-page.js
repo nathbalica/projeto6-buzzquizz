@@ -1,10 +1,11 @@
 import { getQuizById } from "./quiz-page.js";
+import { startQuizz } from "./create-quiz.js"
 
 const allQuizzesContainer = document.querySelector(".all-quizzes-container .quizzes-container");
 const userQuizzesContainer = document.querySelector(".user-quizzes-container-regular .quizzes-container");
 const quizPageContainer = document.querySelector(".quiz-page-container");
 const firstPageContainer = document.querySelector(".first-page-container");
-const thirdPageContainer = document.querySelector(".third-page-container");
+const createQuizcontainer = document.querySelector(".container");
 
 getQuizzes();
 
@@ -45,12 +46,14 @@ function displaySecondPage(selector) {
     getQuizById(quizId);
 }   
 
-function displayThirdPage() {
+function createQuizz() {
 
     firstPageContainer.classList.add("hidden");
-    thirdPageContainer.classList.remove("hidden");
+    createQuizcontainer.classList.remove("hidden");
+    startQuizz()
 }
 
-export { getQuizzes, displayQuizzes, displaySecondPage, displayThirdPage }
+export { getQuizzes, displayQuizzes, displaySecondPage, createQuizz }
 
 window.displaySecondPage = displaySecondPage;
+window.createQuizz = createQuizz;
