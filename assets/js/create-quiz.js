@@ -56,11 +56,21 @@ function validBasicQuizzInformation(){
         alert("A URL da imagem não é válida.");
         // console.log("invalido")
         return false;
-    }else if(createQuizz.amountQuestions < 3){
+    }else if(createQuizz.amountQuestions < 3 || createQuizz.amountQuestions === ''){
         alert("O número mínimo de perguntas é 3.");
         // console.log("invalido")
         return false;
-    }else if(createQuizz.amountLevels < 2){
+    }
+    else if(!createQuizz.amountQuestions){
+        alert(`Por favor, preencha o campo Quantidade de perguntas do quizz`)
+        return false;
+
+    }
+    else if(!createQuizz.amountLevels){
+        alert(`Por favor, preencha o campo Quantidade de Niveis do quizz:`)
+        return false;
+
+    }else if(createQuizz.amountLevels < 2 || createQuizz.amountLevels === ''){
         alert("O número mínimo de níveis é 2.");
         return false;
     }else{
@@ -163,6 +173,9 @@ function getQuestionsHTML(){
 
 
 function renderQuestionsQuizz(){
+    if(!validBasicQuizzInformation()){
+        return;
+    }
     let questionsHTML = getQuestionsHTML();
 
     contentQuizz.innerHTML = `
@@ -292,9 +305,7 @@ function inputQuizzLevels(){
 
 
 function getLevelsHTML(){
-    if(!inputQuizzQuestions()){
-        return;
-    }
+
     const numberLevels = createQuizz.amountLevels;
     let levels = '';
     for(let i = 1; i <= numberLevels; i++){
@@ -306,6 +317,10 @@ function getLevelsHTML(){
 }
 
 function renderLevelsQuizz(){
+    if(!inputQuizzQuestions()){
+        return;
+    }
+
     let levelsHTML = getLevelsHTML();
 
     contentQuizz.innerHTML = `
