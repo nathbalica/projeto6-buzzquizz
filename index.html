@@ -11,99 +11,54 @@
 <body>
 
     <header>
-        <h1>BuzzQuizz</h1>
+        <a href="./"><h1>BuzzQuizz</h1></a>
     </header>
     
-    <div class="container">
-
-        <!-- <div class="page-create-quizz hidden">
-            <h3 class="title">Crie suas perguntas</h3>
-            <div class="subtitle inputs">
-                <div class="title-icon">
-                    <h4 class="number-question">Pergunta 1</h4>
-                    <div class="icon">
-                        <ion-icon name="create-outline"></ion-icon>
-                    </div>
-                </div>
-    
-                <div class="content-questions">
-                    <div class="create-answers">
-                        <input type="text" class="question1-texto" placeholder="Texto da pergunta" />
-                        <input type="text" class="question1-color" placeholder="Cor de fundo da pergunta" />
-                    </div>
-    
-                    <h4 class="subtitle-answer">Resposta correta</h4>
-    
-                    <div class="create-answers question1-correct-answer1">
-                        <input type="text" class="answer" placeholder="Resposta correta" />
-                        <input type="text" class="url" placeholder="URL da imagem" />
-                    </div>
-    
-                    <h4 class="subtitle-answer">Respostas incorretas</h4>
-    
-                    <div class="create-answers question1-incorrect-answer0">
-                        <input type="text" class="answer" placeholder="Resposta incorreta 1" />
-                        <input type="text" class="url" placeholder="URL da imagem 1" />
-                    </div>
-    
-                    <div class="create-answers question1-incorrect-answer1">
-                        <input type="text" class="answer" placeholder="Resposta incorreta 2" />
-                        <input type="text" class="url" placeholder="URL da imagem 2" />
-                    </div>
-    
-                    <div class="create-answers question1-incorrect-answer2">
-                        <input type="text" class="answer" placeholder="Resposta incorreta 3" />
-                        <input type="text" class="url" placeholder="URL da imagem 3" />
-                    </div>
-    
-    
-    
-                </div>
-            </div>
-    
-            <button class="next-create-level">Prosseguir pra criar níveis</button>
-        </div>
-    
-        <div class="page-create-quizz hidden">
-            <h3 class="title">Agora, decida os níveis</h3>
-            <div class="subtitle inputs">
-                <div class="title-icon">
-                    <h4 class="number-question">Nivel 1</h4>
-                    <div class="icon">
-                        <ion-icon name="create-outline"></ion-icon>
-                    </div>
-                </div>
-    
-                <div class="content-questions">
-                    <div class="create-answers">
-                        <input type="text" class="nivel1-texto" placeholder="Título do nível" />
-                        <input type="text" class="nivel1-hits" placeholder="% de acerto mínima" />
-                        <input type="text" class="nivel1-url" placeholder="URL da imagem do nível" />
-                        <input type="text" class="nivel1-description" placeholder="Descrição do nível" />
-                    </div>
-    
-                </div>
-            </div>
-    
-            <button class="next-create-level">Finalizar Quizz</button>
-        </div> -->
-
-        <!-- <div class="page-create-quizz">
-            <h3 class="title">Seu quizz está pronto!</h3>
-            <div class="quizz-preview">
-                <img src="./assets/image/img-quizz.png"/>
-                <h4 class="title-quizz">O quão Potterhead é você?</h4>
-            </div>
-            <button class="acess-quizz">Acessar Quizz</button>
-            <button class="back-home">Voltar pra home</button>
-
-        </div> -->
+    <div class="container hidden">
     </div>
 
 
 
+    <div class="quiz-page-container hidden">
+        <div class="quiz-page-title"></div>
+        <main class="quiz-page-content">
+        </main>
+        <div class="quiz-page-buttons hidden">
+            <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quizz</button>
+            <button class="return-home" onclick="toggleQuizPage()">Voltar pra home</button>
+        </div>
+    </div>
+
+    <div class="first-page-container">
+        <div class="first-page-content">
+            <div class="user-quizzes-container-empty">
+                <div class="message-container">
+                    Você não criou nenhum quizz ainda :(
+                </div>
+                <div class="create-quiz-btn" onclick="createQuizz()">
+                    <p>Criar Quizz</p>
+                </div>
+            </div>
+            <div class="user-quizzes-container-regular hidden">
+                <div class="header">
+                    <h1>Seus quizzes</h1>
+                    <ion-icon name="add-circle" onclick="createQuizz()"></ion-icon>
+                </div>
+                <div class="quizzes-container"></div>
+            </div>
+            <div class="all-quizzes-container">
+                <h1>Todos os quizzes</h1>
+                <div class="quizzes-container"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./assets/js/main.js"></script>
+
+    <script src="./assets/js/main.js" type="module"></script>
+    <script src="./assets/js/quiz-page.js" type="module"></script>
+    <script src="./assets/js/first-page.js" type="module"></script>
+    <script src="./assets/js/create-quiz.js" type="module"></script>
 </body>
 </html>
