@@ -11,10 +11,10 @@
 <body>
 
     <header>
-        <h1>BuzzQuizz</h1>
+        <a href="./"><h1>BuzzQuizz</h1></a>
     </header>
 
-    <div class="quiz-page-container">
+    <div class="quiz-page-container hidden">
         <div class="quiz-page-title"></div>
         <main class="quiz-page-content">
         </main>
@@ -24,8 +24,33 @@
         </div>
     </div>
 
+    <div class="first-page-container">
+        <div class="first-page-content">
+            <div class="user-quizzes-container-empty">
+                <div class="message-container">
+                    Você não criou nenhum quizz ainda :(
+                </div>
+                <div class="create-quiz-btn" onclick="displayThirdPage()">
+                    <p>Criar Quizz</p>
+                </div>
+            </div>
+            <div class="user-quizzes-container-regular hidden">
+                <div class="header">
+                    <h1>Seus quizzes</h1>
+                    <ion-icon name="add-circle" onclick="displayThirdPage()"></ion-icon>
+                </div>
+                <div class="quizzes-container"></div>
+            </div>
+            <div class="all-quizzes-container">
+                <h1>Todos os quizzes</h1>
+                <div class="quizzes-container"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./assets/js/main.js" type="module"></script>
+    <script src="./assets/js/first-page.js" type="module"></script>
 </body>
 </html>

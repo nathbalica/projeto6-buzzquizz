@@ -12,7 +12,6 @@ function getQuizById(id) {
     .then(res => {
 
         quiz = res.data;
-        /* toggleQuizPage(); */
         renderQuiz();
     })
     .catch(err => {
@@ -243,7 +242,9 @@ function resetQuiz() {
 
 function toggleQuizPage() {
     
+    document.querySelector(".first-page-container").classList.toggle("hidden");
     document.querySelector(".quiz-page-container").classList.toggle("hidden");
+    document.body.scrollTo(0, 0);
 }
 
 export { getQuizById, selectCard, resetQuiz, toggleQuizPage }
