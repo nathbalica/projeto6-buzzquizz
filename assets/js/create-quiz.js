@@ -1,6 +1,5 @@
-
-// axios.defaults.headers.common['Authorization'] = 'aNWJQMxCMeOOL5Y0ThO5bESy';
 import { getQuizById } from "./quiz-page.js";
+import { getQuizzes } from "./first-page.js";
 
 const contentQuizz = document.querySelector(".container");
 let createQuizz;
@@ -32,7 +31,6 @@ function startQuizz(){
     `
 }
 
-startQuizz()
 
 function validBasicQuizzInformation(){
 
@@ -399,10 +397,19 @@ function renderAcessQuizz(id){
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
         <button class="acess-quizz" onclick="getQuizById(${id})">Acessar Quizz</button>
-        <button class="back-home">Voltar pra home</button>
+        <button class="back-home" onclick="returnToHome()">Voltar pra home</button>
 
     </div>
     `
+}
+
+function returnToHome() {
+    const firstPageContainer = document.querySelector(".first-page-container");
+    const createQuizcontainer = document.querySelector(".container");
+    createQuizcontainer.classList.add('hidden');
+    firstPageContainer.classList.remove('hidden');
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    getQuizzes();
 }
 
 export { startQuizz }
@@ -411,3 +418,4 @@ window.validateInputLevels = validateInputLevels;
 window.toggleQuestion = toggleQuestion;
 window.renderLevelsQuizz = renderLevelsQuizz;
 window.renderQuestionsQuizz = renderQuestionsQuizz;
+window.returnToHome = returnToHome;

@@ -7,6 +7,7 @@ const quizPageContainer = document.querySelector(".quiz-page-container");
 const firstPageContainer = document.querySelector(".first-page-container");
 const createQuizcontainer = document.querySelector(".container");
 
+
 getQuizzes();
 
 function getQuizzes() {
@@ -20,14 +21,45 @@ function getQuizzes() {
 function displayQuizzes(quizzes) {
     allQuizzesContainer.innerHTML = '';
     userQuizzesContainer.innerHTML = '';
-    Array.from(quizzes.data).forEach(quiz => {
-        allQuizzesContainer.innerHTML += `
+    const storedIds = JSON.parse(localStorage.getItem("id")) || [];
+    if (storedIds.length > 0) {
+        document.querySelector(".user-quizzes-container-empty").classList.add("hidden");
+        document.querySelector(".user-quizzes-container-regular").classList.remove("hidden");
+        const temp = [];
+        for (let i = 0; i < storedIds.length; i++) {
+            temp.push(storedIds[i].id);
+        }
+
+        Array.from(quizzes.data).forEach(quiz => {
+            if (temp.includes(quiz.id)) {
+                userQuizzesContainer.innerHTML += `
                                         <div class="quiz id-${quiz.id}" onclick="displaySecondPage(this)">
                                             <img src="${quiz.image}" alt="">
                                             <h1>${quiz.title}</h1>
                                         </div>
         `;
-    });
+            }
+            else {
+                allQuizzesContainer.innerHTML += `
+                                        <div class="quiz id-${quiz.id}" onclick="test()">
+                                            <img src="${quiz.image}" alt="">
+                                            <h1>${quiz.title}</h1>
+                                        </div>
+        `;
+            }
+        });
+    }
+    else {
+        Array.from(quizzes.data).forEach(quiz => {
+                allQuizzesContainer.innerHTML += `
+                                        <div class="quiz id-${quiz.id}" onclick="test()">
+                                            <img src="${quiz.image}" alt="">
+                                            <h1>${quiz.title}</h1>
+                                        </div>
+        `;
+        });
+    }
+
 }
 
 function getCardIndexByClassList(card) {
@@ -44,13 +76,12 @@ function displaySecondPage(selector) {
     quizPageContainer.classList.remove("hidden");
 
     getQuizById(quizId);
-}   
+}
 
 function createQuizz() {
-
     firstPageContainer.classList.add("hidden");
     createQuizcontainer.classList.remove("hidden");
-    startQuizz()
+    startQuizz();
 }
 
 export { getQuizzes, displayQuizzes, displaySecondPage, createQuizz }
