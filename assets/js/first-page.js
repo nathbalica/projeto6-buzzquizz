@@ -26,7 +26,7 @@ function displayQuizzes(quizzes) {
         allQuizzesContainer.innerHTML += `
             <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
                 <img src="${quiz.image}" alt="">
-                <h1>${quiz.title}</h1>
+                <h2>${quiz.title}</h2>
             </div>
         `;
     });
