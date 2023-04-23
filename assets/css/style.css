@@ -9,7 +9,7 @@ body {
 
     padding: 70px 0;
     font-family: 'Roboto', sans-serif;
-    background-color:#FFFFFF;
+    background-color:#E5E5E5;
 }
 
 
@@ -231,12 +231,16 @@ header h1 {
 
 /* ------------------------------------------create Quiz ------------------------------------------------------------- */
 
+.container{
+  margin-top: 63px;
+}
+
 .page-create-quizz{
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 600px;
-    margin: 63px auto;
+    margin: 0 auto;
 
 }
 
@@ -254,6 +258,12 @@ header h1 {
     background-color: #FFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     padding: 16px;
+}
+
+.page-create-quizz .subtitle{
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05)
 }
 
 .page-create-quizz input{
@@ -296,15 +306,12 @@ header h1 {
 
 
 .page-create-quizz .quizz-preview{
-    margin: 46px auto auto auto;
-    width: 500px;
-    height: 266px;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 40px;
-    cursor: pointer;
-    background-color: aqua;
+  margin: 0 auto;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  height: auto;
 }
 
 .quizz:hover {
@@ -312,8 +319,8 @@ header h1 {
 }
 
 .quizz-preview img{
-    width: 100%;
-    height: 100%;
+    width: 500px;
+    height: 266px;
     object-fit: cover;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.62%, rgba(0, 0, 0, 0.8) 100%)
 }
@@ -535,7 +542,8 @@ header h1 {
 
         font-size: 38px;
     }
-    
+
+
 /*-----------------------------------------------------------QUIZ PAGE STYLE-----------------------------------------------------------------------------------*/
 
     .quiz-page-title img {
@@ -658,6 +666,55 @@ header h1 {
     .first-page-container {
         display: flex;
     }
+
+
+/* -------------------------------------------------- CREATE QUIZ --------------------------------------------- */
+
+    .container{
+      width: 100%; 
+    }
+    
+
+    .page-create-quizz .final{
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .quizz-preview{
+      width: 100%;
+      padding: 20px;
+      /* margin: -63px 0; */
+
+    }
+
+    .quizz-preview img{
+      width: 340px;
+      height: 181px;
+    }
+
+    .page-create-quizz{
+      width: 100%;
+    }
+
+    .subtitle{
+      width: 100%;
+    }
+
+    .page-create-quizz button{
+      margin: 53px 0;
+      max-width: 323px;
+      font-size: 17px;
+
+    }
+
+    .quizz-preview .title-quizz{
+      left: 20px;
+      bottom: 20px;
+      font-size: 18px;
+    }
+
+
+
 }
 
 .hidden {

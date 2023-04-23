@@ -2,6 +2,7 @@
 // axios.defaults.headers.common['Authorization'] = 'aNWJQMxCMeOOL5Y0ThO5bESy';
 import { getQuizById } from "./quiz-page.js";
 
+
 const contentQuizz = document.querySelector(".container");
 let createQuizz;
 let listQuestions = [];
@@ -20,14 +21,14 @@ function startQuizz(){
     
     contentQuizz.innerHTML = `
         <div class="page-create-quizz">
-        <h3 class="title">Comece pelo começo</h3>
-        <div class="inputs">
-            <input type="text" class="title-input" placeholder="Título do seu quizz">
-            <input type="text" class="url" placeholder="URL da imagem do seu quizz">
-            <input type="text" class="amount-questions" placeholder="Quantidade de perguntas do quizz">
-            <input type="text" class="amount-levels" placeholder="Quantidade de níveis do quizz">
-        </div>
-        <button onclick="renderQuestionsQuizz()">Prosseguir pra criar perguntas</button>
+            <h3 class="title">Comece pelo começo</h3>
+            <div class="inputs">
+                <input type="text" class="title-input" placeholder="Título do seu quizz">
+                <input type="text" class="url" placeholder="URL da imagem do seu quizz">
+                <input type="text" class="amount-questions" placeholder="Quantidade de perguntas do quizz">
+                <input type="text" class="amount-levels" placeholder="Quantidade de níveis do quizz">
+            </div>
+            <button onclick="renderQuestionsQuizz()">Prosseguir pra criar perguntas</button>
         </div>
     `
 }
@@ -118,7 +119,7 @@ function inputQuizzQuestions(){
         }
 
         const isValidAnswerImage = validateUrl(answersCorrect.image);
-        
+
         // Validação da resposta correta
         if (answersCorrect.text === "" || answersCorrect.image === "" || !isValidAnswerImage) {
             alert("Por favor, preencha os dados da resposta correta corretamente");
@@ -211,16 +212,19 @@ function toggleQuestion(event) {
 
 function renderQuestionsRepeated(index){
 
-    let wholeQuestion;
+    let wholeQuestion, hiddenIcon;
     if(index !== 1){
         wholeQuestion = 'hidden'
+    }
+    if(index === 1){
+        hiddenIcon = 'hidden'
     }
 
     return `
         <div class="subtitle inputs">
             <div class="title-icon">
                 <h4 class="number-question">Pergunta ${index}</h4>
-                <div class="icon" onclick="toggleQuestion(event)">
+                <div class="icon ${hiddenIcon}" onclick="toggleQuestion(event)">
                     <ion-icon name="create-outline"></ion-icon>
                 </div>
             </div>
@@ -418,24 +422,31 @@ function storeUserCreatedQuizId(id) {
     return storedIds.map((quiz) => ({ id: quiz.id }));
 }
 
-  
+function toggleQuizPage() {
+    
+    document.querySelector(".first-page-container").classList.toggle("hidden");
+    document.querySelector(".container").classList.toggle("hidden");
+    document.body.scrollTo(0, 0);
+}
+
 
 function renderAcessQuizz(id){
     contentQuizz.innerHTML = `
-    <div class="page-create-quizz">
+    <div class="page-create-quizz final">
         <h3 class="title">Seu quizz está pronto!</h3>
         <div class="quizz-preview onclick="getQuizById(${id})">
             <img src="${createQuizz.image}"/>
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
         <button class="acess-quizz" onclick="getQuizById(${id})">Acessar Quizz</button>
-        <button class="back-home">Voltar pra home</button>
+        <button class="back-home" onclick="toggleQuizPage()">Voltar pra home</button>
 
     </div>
     `
 }
 
 export { startQuizz }
+window.toggleQuizPage = toggleQuizPage;
 window.getQuizById = getQuizById;
 window.validateInputLevels = validateInputLevels;
 window.toggleQuestion = toggleQuestion;
