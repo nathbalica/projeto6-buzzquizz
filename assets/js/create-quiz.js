@@ -123,34 +123,36 @@ function inputQuizzQuestions(){
         dataQuestions.answers.push(answersCorrect)
 
         for(let j = 0; j <= 2; j++){
+            let answerText = document.querySelector(`.question-${i}-incorrect-answer${j} .answer`).value;
+            let answerImage = document.querySelector(`.question-${i}-incorrect-answer${j} .url`).value;
+            
+
+            if (answerText.trim() === '' || answerImage.trim() === '') {
+                continue; // Skip adding empty answer to dataQuestions
+              }
+
             let answersIncorrect = {
-                "text": document.querySelector(`.question-${i}-incorrect-answer${j} .answer`).value,
-                "image": document.querySelector(`.question-${i}-incorrect-answer${j} .url`).value,
+                "text": answerText,
+                "image": answerImage,
                 "isCorrectAnswer": false
             }
-
-            const isNotValidAnswerImage = validateUrl(answersCorrect.image);
-            // Validação das respostas incorretas
-            if (answersIncorrect.text === "" || answersIncorrect.image === "" || !isNotValidAnswerImage) {
-                alert("Por favor, preencha os dados de todas as respostas incorretas corretamente");
-                return false;
-            }
+            
 
             dataQuestions.answers.push(answersIncorrect)
         }
 
+        
         if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer).length === 0) {
             alert("Por favor, selecione a resposta correta para a pergunta");
             return false;
           }
-          
-          if (dataQuestions.answers.length < 2) {
-            alert("Por favor, insira pelo menos 2 respostas para a pergunta");
+    
+        if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer === false).length < 1) {
+            alert("Por favor, escreva pelo menos uma alternativa falsa!");
             return false;
           }
-
-        listQuestions.push(dataQuestions)
     
+        listQuestions.push(dataQuestions)
     }
     return true;
 }
