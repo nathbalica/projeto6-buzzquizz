@@ -6,11 +6,14 @@ const userQuizzesContainer = document.querySelector(".user-quizzes-container-reg
 const quizPageContainer = document.querySelector(".quiz-page-container");
 const firstPageContainer = document.querySelector(".first-page-container");
 const createQuizcontainer = document.querySelector(".container");
+const loadingScreen = document.querySelector(".loading-screen");
 
 
 getQuizzes();
 
 function getQuizzes() {
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
     const promise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes");
     promise.then(displayQuizzes);
     promise.catch(error => {
@@ -19,6 +22,8 @@ function getQuizzes() {
 }
 
 function displayQuizzes(quizzes) {
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
     allQuizzesContainer.innerHTML = '';
     userQuizzesContainer.innerHTML = '';
     let hasQuiz = false;
@@ -62,6 +67,20 @@ function displayQuizzes(quizzes) {
             });
         }
         else {
+            document.querySelector(".user-quizzes-container-empty").classList.remove("hidden");
+            document.querySelector(".user-quizzes-container-regular").classList.add("hidden");
+            Array.from(quizzes.data).forEach(quiz => {
+                allQuizzesContainer.innerHTML += `
+                                            <div class="quiz id-${quiz.id}" onclick="displaySecondPage(this)">
+                                                <img src="${quiz.image}" alt="">
+                                                <h1>${quiz.title}</h1>
+                                                <div class="bonus-buttons">
+                                                        <ion-icon name="create-outline"></ion-icon>
+                                                        <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
+                                                </div>
+                                            </div>
+            `;
+            });
             localStorage.clear();
         }
 
@@ -80,7 +99,7 @@ function displayQuizzes(quizzes) {
         `;
         });
     }
-
+    firstPageContainer.classList.remove("hidden");
 }
 
 function getCardIndexByClassList(card) {
@@ -118,6 +137,8 @@ function deleteQuiz(deleteButton) {
                       "Secret-Key": storedIds[i].key
                     }
                   };
+                loadingScreen.classList.remove("hidden");
+                document.body.classList.add("overflow-hidden");
                 axios.delete(url, config)
                 .then(getQuizzes)
                 .catch(e => console.log(e));

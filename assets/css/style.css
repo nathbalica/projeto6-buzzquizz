@@ -517,7 +517,7 @@ header h1 {
   right: 0;
   width: 43px;
   height: 87px;
-  background-color: #EC362D;
+  background-color: #ec362d;
   color: white;
   border-radius: 10px 0 0 11px;
   display: flex;
@@ -530,6 +530,106 @@ header h1 {
 
 .bonus-buttons ion-icon {
   cursor: pointer;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.loading-screen {
+  width: 1051px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: #FAFAFA;
+  min-width: 340px;
+  
+}
+
+.loading-screen h1 {
+  width: 130px;
+  height: 29px;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 29px;
+  color: #ec362d;
+  margin-top: 24px;
+}
+
+.loader {
+  transform: rotateZ(45deg);
+  perspective: 1000px;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  color: blue;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  transform: rotateX(70deg);
+  animation: 1s spin linear infinite;
+}
+.loader:after {
+  color: #ff3d00;
+  transform: rotateY(70deg);
+  animation-delay: 0.4s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
+}
+
+@keyframes rotateccw {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    box-shadow: 0.2em 0px 0 0px currentcolor;
+  }
+  12% {
+    box-shadow: 0.2em 0.2em 0 0 currentcolor;
+  }
+  25% {
+    box-shadow: 0 0.2em 0 0px currentcolor;
+  }
+  37% {
+    box-shadow: -0.2em 0.2em 0 0 currentcolor;
+  }
+  50% {
+    box-shadow: -0.2em 0 0 0 currentcolor;
+  }
+  62% {
+    box-shadow: -0.2em -0.2em 0 0 currentcolor;
+  }
+  75% {
+    box-shadow: 0px -0.2em 0 0 currentcolor;
+  }
+  87% {
+    box-shadow: 0.2em -0.2em 0 0 currentcolor;
+  }
 }
 
 /* Layout mobile */
@@ -613,7 +713,8 @@ header h1 {
   .user-quizzes-container-regular,
   .all-quizzes-container,
   .quizzes-container,
-  .quiz {
+  .quiz,
+  .loading-screen {
     width: 100%;
   }
 

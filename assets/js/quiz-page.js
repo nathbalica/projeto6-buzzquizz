@@ -3,6 +3,7 @@ let quiz = [];
 
 const url = 'https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes';
 const token = 'aNWJQMxCMeOOL5Y0ThO5bESy'
+const loadingScreen = document.querySelector(".loading-screen");
 
 axios.defaults.headers.common['Authorization'] = token;
 
@@ -13,7 +14,8 @@ function getQuizById(id) {
     createPageContainer.classList.add('hidden')
     const quizPageContainer = document.querySelector('.quiz-page-container')
     quizPageContainer.classList.remove('hidden')
-
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
     axios.get(`${url}/${id}`)
     .then(res => {
 
@@ -32,7 +34,8 @@ function getQuizById(id) {
 }
 
 function renderQuiz() {
-
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
     userQuizResult = 0;
     
     /* Creates quiz title */

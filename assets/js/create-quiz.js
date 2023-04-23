@@ -2,6 +2,7 @@ import { getQuizById } from "./quiz-page.js";
 import { getQuizzes } from "./first-page.js";
 
 const contentQuizz = document.querySelector(".container");
+const loadingScreen = document.querySelector(".loading-screen");
 let createQuizz;
 let listQuestions = [];
 let listLevels = [];
@@ -360,6 +361,8 @@ function saveDataQuizz(){
     }
 
     console.log(saveData)
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
     const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData)
     promise.then(response => {
         AnswerWorked(response);
@@ -381,7 +384,8 @@ function storeUserCreatedQuizId(id, key) {
       localStorage.setItem("id", JSON.stringify(storedIds));
       renderAcessQuizz(id);
     }
-  
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
     return storedIds.map((quiz) => ({ id: quiz.id, key: quiz.key }));
 }
 
