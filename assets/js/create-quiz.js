@@ -85,11 +85,19 @@ function validateUrl(url) {
 
 function inputQuizzQuestions(){
 
+    listQuestions = [];
+
     const numberQuestions = createQuizz.amountQuestions;
+
     for(let i = 1; i <= numberQuestions; i++){
-        let dataQuestions = {};
+        let dataQuestions = {
+            title: '',
+            color: '',
+            answers: []
+          };
 
         dataQuestions.title = document.querySelector(`.question-${i}-texto`).value
+        dataQuestions.color = document.querySelector(`.question-${i}-color`).value
 
         // Validação do texto da pergunta
         if (dataQuestions.title.length < 20) {
@@ -97,23 +105,20 @@ function inputQuizzQuestions(){
             return false;
         }
 
-        dataQuestions.color = document.querySelector(`.question-${i}-color`).value
-
         // Validação da cor de fundo
         if (!dataQuestions.color.match(/^#[0-9A-F]{6}$/i)) {
             alert("Por favor, insira uma cor em formato hexadecimal (exemplo: #FFA500)");
             return false;
         }
 
-        dataQuestions.answers = [];
-
-        let answersCorrect = {
+        const answersCorrect = {
             "text": document.querySelector(`.question-${i}-correct-answer1 .answer`).value,
             "image": document.querySelector(`.question-${i}-correct-answer1 .url`).value,
             "isCorrectAnswer": true
         }
 
         const isValidAnswerImage = validateUrl(answersCorrect.image);
+        
         // Validação da resposta correta
         if (answersCorrect.text === "" || answersCorrect.image === "" || !isValidAnswerImage) {
             alert("Por favor, preencha os dados da resposta correta corretamente");
@@ -122,7 +127,11 @@ function inputQuizzQuestions(){
 
         dataQuestions.answers.push(answersCorrect)
 
-        for(let j = 0; j <= 2; j++){
+        console.log("Inserindo as respostas corretas:\n")
+        console.log("dataQuestions:", dataQuestions)
+        console.log("ListQuestion:", listQuestions)
+
+        for(let j = 0; j < 3; j++){
             let answerText = document.querySelector(`.question-${i}-incorrect-answer${j} .answer`).value;
             let answerImage = document.querySelector(`.question-${i}-incorrect-answer${j} .url`).value;
             
@@ -139,6 +148,10 @@ function inputQuizzQuestions(){
             
 
             dataQuestions.answers.push(answersIncorrect)
+
+            console.log("Inserindo as respostas corretas:\n")
+            console.log("dataQuestions:", dataQuestions)
+            console.log("ListQuestion:", listQuestions)
         }
 
         
