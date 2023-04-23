@@ -36,7 +36,7 @@ function renderQuiz() {
     /* Creates quiz title */
     const quizTitle = document.querySelector(".quiz-page-title");
     quizTitle.innerHTML = `
-        <div class="image-overlay">
+        <div class="image-overlay" data-test="banner">
             <img src="${quiz.image}"/>
         </div>
         <h2>${quiz.title}</h2>
@@ -61,8 +61,8 @@ function renderQuiz() {
 
         /* Creates quiz card */
         const cardTitle = `
-            <div class="quiz-page-card">
-                <div class="card-title">
+            <div class="quiz-page-card" data-test="question">
+                <div class="card-title" data-test="question-title">
                     <h3>${question.title}</h3>
                 </div>
             <div class="card-questions question-${questionIndex}">
@@ -76,9 +76,9 @@ function renderQuiz() {
 
             /* Creates question answers */
             cardContent += `
-                <div class="card-content answers-${answersIndex}" onclick="selectCard(this)">
+                <div class="card-content answers-${answersIndex}" data-test="answer" onclick="selectCard(this)">
                     <img src="${answers.image}"/>
-                    <h4>${answers.text}</h4>
+                    <h4 data-test="answer-text">${answers.text}</h4>
                 </div>
             `;
             answersIndex++;
@@ -126,12 +126,12 @@ function renderFinalResult() {
     const quizContent = document.querySelector(".quiz-page-content");
     quizContent.innerHTML += `
         <div class="quiz-page-final-card">
-            <div class="card-title">
+            <div class="card-title" data-test="level-title">
                 <h3>${userQuizResult}% de acerto: ${quizLevels[userLevel].title}</h3>
             </div>
             <div class="final-card-content">
-                <img src="${quizLevels[userLevel].image}"/>
-                <h4>${quizLevels[userLevel].text}</h4>
+                <img data-test="level-img" src="${quizLevels[userLevel].image}"/>
+                <h4 data-test="level-text">${quizLevels[userLevel].text}</h4>
             </div>
         </div>
     `;

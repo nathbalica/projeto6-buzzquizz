@@ -26,7 +26,7 @@ function displayQuizzes(quizzes) {
 
     Array.from(quizzes.data).forEach(quiz => {
         allQuizzesContainer.innerHTML += `
-            <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+            <div class="quiz id-${quiz.id}" data-test="others-quiz" onclick="displayQuizPage(this)">
                 <img src="${quiz.image}" alt="">
                 <h2>${quiz.title}</h2>
             </div>

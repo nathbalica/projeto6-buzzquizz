@@ -21,14 +21,14 @@
                 <div class="message-container">
                     Você não criou nenhum quizz ainda :(
                 </div>
-                <div class="create-quiz-btn" onclick="createQuizz()">
+                <div class="create-quiz-btn" data-test="create-btn" onclick="createQuizz()">
                     <p>Criar Quizz</p>
                 </div>
             </div>
             <div class="user-quizzes-container-regular hidden">
                 <div class="header">
                     <h2>Seus Quizzes</h2>
-                    <ion-icon name="add-circle" onclick="createQuizz()"></ion-icon>
+                    <ion-icon name="add-circle" data-test="create-btn" onclick="createQuizz()"></ion-icon>
                 </div>
                 <div class="quizzes-container"></div>
             </div>
@@ -44,8 +44,8 @@
         <main class="quiz-page-content">
         </main>
         <div class="quiz-page-buttons hidden">
-            <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quizz</button>
-            <button class="return-home" onclick="toggleQuizPage()">Voltar pra home</button>
+            <button class="reset-quiz" data-test="restart" onclick="resetQuiz()">Reiniciar Quizz</button>
+            <button class="return-home" data-test="go-home" onclick="toggleQuizPage()">Voltar pra home</button>
         </div>
     </div>
 

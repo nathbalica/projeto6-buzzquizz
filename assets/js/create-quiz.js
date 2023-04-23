@@ -20,12 +20,12 @@ function startQuizz(){
         <div class="page-create-quizz">
         <h3 class="title">Comece pelo começo</h3>
         <div class="inputs">
-            <input type="text" class="title-input" placeholder="Título do seu quizz">
-            <input type="text" class="url" placeholder="URL da imagem do seu quizz">
-            <input type="text" class="amount-questions" placeholder="Quantidade de perguntas do quizz">
-            <input type="text" class="amount-levels" placeholder="Quantidade de níveis do quizz">
+            <input type="text" data-test="title-input" class="title-input" placeholder="Título do seu quizz">
+            <input type="text" data-test="img-input" class="url" placeholder="URL da imagem do seu quizz">
+            <input type="text" data-test="questions-amount-input" class="amount-questions" placeholder="Quantidade de perguntas do quizz">
+            <input type="text" data-test="levels-amount-input" class="amount-levels" placeholder="Quantidade de níveis do quizz">
         </div>
-        <button onclick="renderQuestionsQuizz()">Prosseguir pra criar perguntas</button>
+        <button data-test="go-create-questions" onclick="renderQuestionsQuizz()">Prosseguir pra criar perguntas</button>
         </div>
     `;
 }
@@ -160,7 +160,7 @@ function renderQuestionsQuizz(){
     <div class="page-create-quizz">
         <h3 class="title">Crie suas perguntas</h3>
         ${questionsHTML}
-        <button class="next-create-level" onclick="renderLevelsQuizz()">Prosseguir pra criar níveis</button>
+        <button data-test="go-create-levels" class="next-create-level" onclick="renderLevelsQuizz()">Prosseguir pra criar níveis</button>
     </div>
     `;
 }
@@ -179,42 +179,42 @@ function renderQuestionsRepeated(index){
     }
 
     return `
-        <div class="subtitle inputs">
+        <div data-test="question-ctn" class="subtitle inputs">
             <div class="title-icon">
                 <h4 class="number-question">Pergunta ${index}</h4>
-                <div class="icon" onclick="toggleQuestion(event)">
+                <div class="icon" data-test="toggle" onclick="toggleQuestion(event)">
                     <ion-icon name="create-outline"></ion-icon>
                 </div>
             </div>
 
             <div class="content-questions ${wholeQuestion}">
                 <div class="create-answers">
-                    <input type="text" class="question-${index}-texto" placeholder="Texto da pergunta" />
-                    <input type="text" class="question-${index}-color" placeholder="Cor de fundo da pergunta" />
+                    <input type="text" data-test="question-input" class="question-${index}-texto" placeholder="Texto da pergunta" />
+                    <input type="text" data-test="question-color-input" class="question-${index}-color" placeholder="Cor de fundo da pergunta" />
                 </div>
 
                 <h4 class="subtitle-answer">Resposta correta</h4>
 
                 <div class="create-answers question-${index}-correct-answer1">
-                    <input type="text" class="answer" placeholder="Resposta correta" />
-                    <input type="text" class="url" placeholder="URL da imagem" />
+                    <input data-test="correct-answer-input" type="text" class="answer" placeholder="Resposta correta" />
+                    <input data-test="correct-img-input" type="text" class="url" placeholder="URL da imagem" />
                 </div>
 
                 <h4 class="subtitle-answer">Respostas incorretas</h4>
 
                 <div class="create-answers question-${index}-incorrect-answer0">
-                    <input type="text" class="answer" placeholder="Resposta incorreta 1" />
-                    <input type="text" class="url" placeholder="URL da imagem 1" />
+                    <input data-test="wrong-answer-input" type="text" class="answer" placeholder="Resposta incorreta 1" />
+                    <input data-test="wrong-img-input" type="text" class="url" placeholder="URL da imagem 1" />
                 </div>
 
                 <div class="create-answers question-${index}-incorrect-answer1">
-                    <input type="text" class="answer" placeholder="Resposta incorreta 2" />
-                    <input type="text" class="url" placeholder="URL da imagem 2" />
+                    <input data-test="wrong-answer-input" type="text" class="answer" placeholder="Resposta incorreta 2" />
+                    <input data-test="wrong-img-input" type="text" class="url" placeholder="URL da imagem 2" />
                 </div>
 
                 <div class="create-answers question-${index}-incorrect-answer2">
-                    <input type="text" class="answer" placeholder="Resposta incorreta 3" />
-                    <input type="text" class="url" placeholder="URL da imagem 3" />
+                    <input data-test="wrong-answer-input" type="text" class="answer" placeholder="Resposta incorreta 3" />
+                    <input data-test="wrong-img-input" type="text" class="url" placeholder="URL da imagem 3" />
                 </div>
 
             </div>
@@ -294,7 +294,7 @@ function renderLevelsQuizz(){
     <div class="page-create-quizz">
     <h3 class="title">Agora, decida os níveis</h3>
         ${levelsHTML}
-        <button class="next-create-level" onclick="validateInputLevels()">Finalizar Quizz</button>
+        <button data-test="finish" class="next-create-level" onclick="validateInputLevels()">Finalizar Quizz</button>
     </div>
     `;
 }
@@ -306,8 +306,8 @@ function renderLevelsRepeated(index){
         wholeLevel = 'hidden';
     }
     return `
-        <div class="subtitle inputs">
-            <div class="title-icon" onclick="toggleQuestion(event)">
+        <div data-test="level-ctn" class="subtitle inputs">
+            <div data-test="toggle" class="title-icon" onclick="toggleQuestion(event)">
                 <h4 class="number-question">Nivel ${index}</h4>
                 <div class="icon">
                     <ion-icon name="create-outline"></ion-icon>
@@ -316,10 +316,10 @@ function renderLevelsRepeated(index){
 
             <div class="content-questions ${wholeLevel}">
                 <div class="create-answers">
-                    <input type="text" class="nivel${index}-text" placeholder="Título do nível" />
-                    <input type="text" class="nivel${index}-hits" placeholder="% de acerto mínima" />
-                    <input type="text" class="nivel${index}-url" placeholder="URL da imagem do nível" />
-                    <input type="text" class="nivel${index}-description" placeholder="Descrição do nível" />
+                    <input data-test="level-input" type="text" class="nivel${index}-text" placeholder="Título do nível" />
+                    <input data-test="level-percent-input" type="text" class="nivel${index}-hits" placeholder="% de acerto mínima" />
+                    <input data-test="level-img-input" type="text" class="nivel${index}-url" placeholder="URL da imagem do nível" />
+                    <input data-test="level-description-input" type="text" class="nivel${index}-description" placeholder="Descrição do nível" />
                 </div>
             </div>
         </div>
@@ -372,14 +372,14 @@ function storeUserCreatedQuizId(id) {
 
 function renderAcessQuizz(id){
     contentQuizz.innerHTML = `
-    <div class="page-create-quizz">
+    <div data-test="success-banner" class="page-create-quizz">
         <h3 class="title">Seu quizz está pronto!</h3>
         <div class="quizz-preview onclick="getQuizById(${id})">
             <img src="${createQuizz.image}"/>
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
-        <button class="acess-quizz" onclick="getQuizById(${id})">Acessar Quizz</button>
-        <button class="back-home" onclick="toggleCreateQuiz()">Voltar pra home</button>
+        <button data-test="go-quiz" class="acess-quizz" onclick="getQuizById(${id})">Acessar Quizz</button>
+        <button data-test="go-home" class="back-home" onclick="toggleCreateQuiz()">Voltar pra home</button>
 
     </div>
     `;
