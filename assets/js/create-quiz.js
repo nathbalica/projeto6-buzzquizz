@@ -1,8 +1,8 @@
-
-// axios.defaults.headers.common['Authorization'] = 'aNWJQMxCMeOOL5Y0ThO5bESy';
 import { getQuizById } from "./quiz-page.js";
+import { getQuizzes } from "./first-page.js";
 
 const contentQuizz = document.querySelector(".container");
+const loadingScreen = document.querySelector(".loading-screen");
 let createQuizz;
 let listQuestions = [];
 let listLevels = [];
@@ -32,7 +32,6 @@ function startQuizz(){
     `
 }
 
-startQuizz()
 
 function validBasicQuizzInformation(){
 
@@ -362,10 +361,12 @@ function saveDataQuizz(){
     }
 
     console.log(saveData)
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
     const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData)
     promise.then(response => {
         AnswerWorked(response);
-        storeUserCreatedQuizId(response.data.id);
+        storeUserCreatedQuizId(response.data.id, response.data.key);
     });
 }
 
@@ -374,18 +375,18 @@ function AnswerWorked(response){
     return response.data
 }
 
-function storeUserCreatedQuizId(id) {
+function storeUserCreatedQuizId(id, key) {
     const storedIds = JSON.parse(localStorage.getItem("id")) || [];
     const quizIndex = storedIds.findIndex(quiz => quiz.id === id);
-  
+    
     if (quizIndex === -1) {
-      storedIds.push({ id });
+      storedIds.push({ id, key });
       localStorage.setItem("id", JSON.stringify(storedIds));
-
       renderAcessQuizz(id);
     }
-  
-    return storedIds.map((quiz) => ({ id: quiz.id }));
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+    return storedIds.map((quiz) => ({ id: quiz.id, key: quiz.key }));
 }
 
   
@@ -399,10 +400,19 @@ function renderAcessQuizz(id){
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
         <button class="acess-quizz" onclick="getQuizById(${id})">Acessar Quizz</button>
-        <button class="back-home">Voltar pra home</button>
+        <button class="back-home" onclick="returnToHome()">Voltar pra home</button>
 
     </div>
     `
+}
+
+function returnToHome() {
+    const firstPageContainer = document.querySelector(".first-page-container");
+    const createQuizcontainer = document.querySelector(".container");
+    createQuizcontainer.classList.add('hidden');
+    firstPageContainer.classList.remove('hidden');
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    getQuizzes();
 }
 
 export { startQuizz }
@@ -411,3 +421,4 @@ window.validateInputLevels = validateInputLevels;
 window.toggleQuestion = toggleQuestion;
 window.renderLevelsQuizz = renderLevelsQuizz;
 window.renderQuestionsQuizz = renderQuestionsQuizz;
+window.returnToHome = returnToHome;
