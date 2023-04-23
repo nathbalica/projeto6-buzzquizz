@@ -1,4 +1,5 @@
 import { getCardIndexByClassList } from "./main.js";
+import { getQuizzes } from "./first-page.js";
 
 let userQuizResult;
 let quiz = [];
@@ -239,9 +240,10 @@ function resetQuiz() {
 
 function toggleQuizPage() {
     
+    document.querySelector(".quiz-page-buttons").classList.add("hidden");
     document.querySelector(".first-page-container").classList.toggle("hidden");
     document.querySelector(".quiz-page-container").classList.toggle("hidden");
-    document.body.scrollTo(0, 0);
+    getQuizzes();
 }
 
 export { getQuizById, selectCard, resetQuiz, toggleQuizPage };

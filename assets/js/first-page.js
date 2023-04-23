@@ -22,6 +22,8 @@ function getQuizzes() {
 function displayQuizzes(quizzes) {
     allQuizzesContainer.innerHTML = '';
     userQuizzesContainer.innerHTML = '';
+    allQuizzesContainer.scrollIntoView();
+
     Array.from(quizzes.data).forEach(quiz => {
         allQuizzesContainer.innerHTML += `
             <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">

@@ -1,4 +1,6 @@
+import { toggleCreateQuiz } from "./main.js";
 import { getQuizById } from "./quiz-page.js";
+import { getQuizzes } from "./first-page.js";
 
 const contentQuizz = document.querySelector(".container");
 let createQuizz;
@@ -349,6 +351,7 @@ function saveDataQuizz(){
 }
 
 function AnswerWorked(response){
+    getQuizzes();
     console.info(`Quiz ${response.data.key} criado com Sucesso!!!`);
     return response.data;
 }
@@ -376,7 +379,7 @@ function renderAcessQuizz(id){
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
         <button class="acess-quizz" onclick="getQuizById(${id})">Acessar Quizz</button>
-        <button class="back-home">Voltar pra home</button>
+        <button class="back-home" onclick="toggleCreateQuiz()">Voltar pra home</button>
 
     </div>
     `;
