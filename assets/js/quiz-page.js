@@ -247,10 +247,10 @@ function resetQuiz() {
 }
 
 function toggleQuizPage() {
-    
     document.querySelector(".first-page-container").classList.toggle("hidden");
     document.querySelector(".quiz-page-container").classList.toggle("hidden");
-    document.body.scrollTo(0, 0);
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    getQuizzes();
 }
 
 export { getQuizById, selectCard, resetQuiz, toggleQuizPage }

@@ -363,7 +363,7 @@ function saveDataQuizz(){
     const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData)
     promise.then(response => {
         AnswerWorked(response);
-        storeUserCreatedQuizId(response.data.id);
+        storeUserCreatedQuizId(response.data.id, response.data.key);
     });
 }
 
@@ -372,18 +372,17 @@ function AnswerWorked(response){
     return response.data
 }
 
-function storeUserCreatedQuizId(id) {
+function storeUserCreatedQuizId(id, key) {
     const storedIds = JSON.parse(localStorage.getItem("id")) || [];
     const quizIndex = storedIds.findIndex(quiz => quiz.id === id);
-  
+    
     if (quizIndex === -1) {
-      storedIds.push({ id });
+      storedIds.push({ id, key });
       localStorage.setItem("id", JSON.stringify(storedIds));
-
       renderAcessQuizz(id);
     }
   
-    return storedIds.map((quiz) => ({ id: quiz.id }));
+    return storedIds.map((quiz) => ({ id: quiz.id, key: quiz.key }));
 }
 
   
