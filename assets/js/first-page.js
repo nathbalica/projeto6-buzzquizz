@@ -1,5 +1,6 @@
+import { startAxios, getCardIndexByClassList } from "./main.js";
 import { getQuizById } from "./quiz-page.js";
-import { startQuizz } from "./create-quiz.js"
+import { startQuizz } from "./create-quiz.js";
 
 const allQuizzesContainer = document.querySelector(".all-quizzes-container .quizzes-container");
 const userQuizzesContainer = document.querySelector(".user-quizzes-container-regular .quizzes-container");
@@ -8,12 +9,15 @@ const firstPageContainer = document.querySelector(".first-page-container");
 const createQuizcontainer = document.querySelector(".container");
 const loadingScreen = document.querySelector(".loading-screen");
 
-
+startAxios();
 getQuizzes();
 
 function getQuizzes() {
+
+    /*
     loadingScreen.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
+    */
     const promise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes");
     promise.then(displayQuizzes);
     promise.catch(error => {
@@ -22,10 +26,11 @@ function getQuizzes() {
 }
 
 function displayQuizzes(quizzes) {
-    loadingScreen.classList.add("hidden");
-    document.body.classList.remove("overflow-hidden");
+    
     allQuizzesContainer.innerHTML = '';
     userQuizzesContainer.innerHTML = '';
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+
     let hasQuiz = false;
     const storedIds = JSON.parse(localStorage.getItem("id")) || [];
     if (storedIds.length > 0) {
@@ -42,27 +47,23 @@ function displayQuizzes(quizzes) {
             Array.from(quizzes.data).forEach(quiz => {
                 if (temp.includes(quiz.id)) {
                     userQuizzesContainer.innerHTML += `
-                                            <div class="quiz id-${quiz.id}" onclick="displaySecondPage(this)">
-                                                <img src="${quiz.image}" alt="">
-                                                <h1>${quiz.title}</h1>
-                                                <div class="bonus-buttons">
-                                                    <ion-icon name="create-outline"></ion-icon>
-                                                    <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
-                                                </div>
-                                            </div>
-            `;
+                        <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                            <img src="${quiz.image}" alt="">
+                            <h1>${quiz.title}</h1>
+                            <div class="bonus-buttons">
+                                <ion-icon name="create-outline"></ion-icon>
+                                <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
+                            </div>
+                        </div>
+                    `;
                 }
                 else {
                     allQuizzesContainer.innerHTML += `
-                                            <div class="quiz id-${quiz.id}" onclick="displaySecondPage(this)">
-                                                <img src="${quiz.image}" alt="">
-                                                <h1>${quiz.title}</h1>
-                                                <div class="bonus-buttons">
-                                                    <ion-icon name="create-outline"></ion-icon>
-                                                    <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
-                                                </div>
-                                            </div>
-            `;
+                        <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                            <img src="${quiz.image}" alt="">
+                            <h1>${quiz.title}</h1>
+                        </div>
+                    `;
                 }
             });
         }
@@ -71,15 +72,15 @@ function displayQuizzes(quizzes) {
             document.querySelector(".user-quizzes-container-regular").classList.add("hidden");
             Array.from(quizzes.data).forEach(quiz => {
                 allQuizzesContainer.innerHTML += `
-                                            <div class="quiz id-${quiz.id}" onclick="displaySecondPage(this)">
-                                                <img src="${quiz.image}" alt="">
-                                                <h1>${quiz.title}</h1>
-                                                <div class="bonus-buttons">
-                                                        <ion-icon name="create-outline"></ion-icon>
-                                                        <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
-                                                </div>
-                                            </div>
-            `;
+                    <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                        <img src="${quiz.image}" alt="">
+                        <h1>${quiz.title}</h1>
+                        <div class="bonus-buttons">
+                                <ion-icon name="create-outline"></ion-icon>
+                                <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
+                        </div>
+                    </div>
+                `;
             });
             localStorage.clear();
         }
@@ -88,33 +89,17 @@ function displayQuizzes(quizzes) {
     else {
         Array.from(quizzes.data).forEach(quiz => {
             allQuizzesContainer.innerHTML += `
-                                        <div class="quiz id-${quiz.id}" onclick="displaySecondPage(this)">
-                                            <img src="${quiz.image}" alt="">
-                                            <h1>${quiz.title}</h1>
-                                            <div class="bonus-buttons">
-                                                    <ion-icon name="create-outline"></ion-icon>
-                                                    <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
-                                            </div>
-                                        </div>
-        `;
+                <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                    <img src="${quiz.image}" alt="">
+                    <h1>${quiz.title}</h1>
+                </div>
+            `;
         });
     }
+    
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
     firstPageContainer.classList.remove("hidden");
-}
-
-function getCardIndexByClassList(card) {
-
-    /* Return index value from question/anwser card */
-    return Number(card.classList[1].split("-")[1]);
-}
-
-function displaySecondPage(selector) {
-    const quizId = getCardIndexByClassList(selector);
-
-    firstPageContainer.classList.add("hidden");
-    quizPageContainer.classList.remove("hidden");
-
-    getQuizById(quizId);
 }
 
 function createQuizz() {
@@ -122,6 +107,15 @@ function createQuizz() {
     createQuizcontainer.classList.remove("hidden");
     startQuizz();
 }
+
+function displayQuizPage(selector) {
+
+    const quizId = getCardIndexByClassList(selector);
+    firstPageContainer.classList.add("hidden");
+    quizPageContainer.classList.remove("hidden");
+
+    getQuizById(quizId);
+}   
 
 function deleteQuiz(deleteButton) {
     if (confirm("Tem certeza de que deseja excluir este quiz?")) {
@@ -147,8 +141,4 @@ function deleteQuiz(deleteButton) {
     }
 }
 
-export { getQuizzes, displayQuizzes, displaySecondPage, createQuizz }
-
-window.displaySecondPage = displaySecondPage;
-window.createQuizz = createQuizz;
-window.deleteQuiz = deleteQuiz;
+export { getQuizzes, displayQuizzes, displayQuizPage, createQuizz, deleteQuiz };

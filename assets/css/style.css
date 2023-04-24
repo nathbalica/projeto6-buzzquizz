@@ -6,9 +6,10 @@
 }
 
 body {
+
   padding: 70px 0;
-  font-family: "Roboto", sans-serif;
-  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  background-color: #FAFAFA;
 }
 
 header {
@@ -26,24 +27,36 @@ header {
 }
 
 header a {
+
   text-decoration: none;
   color: inherit;
 }
 
 header h1 {
+
   text-align: center;
   font-size: 43px;
   font-weight: 700;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 
 /*-----------------------------------------------------------QUIZ PAGE STYLE-----------------------------------------------------------------------------------*/
+
+.quiz-page-container {
+
+  font-weight: 700;
+  color: #FFFFFF;
+  word-break: break-word;
+}
+
 .quiz-page-title {
+
   margin-bottom: 50px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .image-overlay {
@@ -61,7 +74,7 @@ header h1 {
   font-weight: 400;
   font-size: 40px;
   line-height: 50px;
-  color: #ffffff;
+  padding: 0 20px;
   position: absolute;
 }
 
@@ -75,13 +88,13 @@ header h1 {
 .quiz-page-card {
   width: 760px;
   background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 3px 8px;
 }
 
 .card-title {
   width: 90%;
   height: 138px;
-  margin: 20px auto;
-  background-color: #434ca0;
+  margin: 20px auto 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,10 +102,8 @@ header h1 {
 
 .card-title h3 {
   font-size: 23px;
-  font-weight: 700;
   text-align: center;
   line-height: 31px;
-  color: #ffffff;
   padding: 0 20px;
 }
 
@@ -102,6 +113,7 @@ header h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 20px 0;
   justify-content: space-between;
 }
 
@@ -112,38 +124,43 @@ header h1 {
 }
 
 .card-content img {
+
   width: 330px;
   height: 176px;
   cursor: pointer;
 }
 
 .card-content h4 {
+
   font-size: 20px;
-  font-weight: 700;
   line-height: 26px;
   color: #000000;
   width: 320px;
   cursor: pointer;
-  word-break: break-word;
 }
 
 .card-opacity {
   opacity: 0.3;
+  word-break: break-word;
 }
 
 .wrong-answer h4 {
-  color: #ff4b4b;
+
+  color: #FF4B4B;
 }
 
 .correct-answer h4 {
-  color: #009c22;
+
+  color: #009C22;
 }
 
 .quiz-page-final-card {
-  width: 760px;
-  padding: 20px 0;
-  margin-bottom: 50px;
-  background-color: #ffffff;
+
+    width: 760px; 
+    padding: 20px 0;
+    margin-bottom: 50px;
+    background-color: #FFFFFF;
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 3px 8px;
 }
 
 .quiz-page-final-card .card-title {
@@ -152,18 +169,18 @@ header h1 {
 }
 
 .quiz-page-final-card h3 {
-  font-size: 23px;
-  font-weight: 700;
-  line-height: 30px;
-  text-align: center;
-  color: #ffffff;
+
+    font-size: 23px;
+    line-height: 30px;
+    text-align: center;
 }
 
 .final-card-content {
-  width: 90%;
-  margin: 0 auto;
-  display: flex;
-  gap: 15px;
+    width: 90%;
+    padding: 20px 0;
+    margin: 0 auto;
+    display: flex;
+    gap: 15px;
 }
 
 .final-card-content img {
@@ -172,11 +189,10 @@ header h1 {
 }
 
 .final-card-content h4 {
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 26px;
-  color: #484848;
-  word-break: break-word;
+
+    font-size: 20px;
+    line-height: 26px;
+    color: #484848;
 }
 
 .quiz-page-buttons {
@@ -191,6 +207,7 @@ header h1 {
 .quiz-page-buttons button {
   cursor: pointer;
   font-size: 21px;
+  font-weight: 400;
 }
 
 .reset-quiz {
@@ -201,6 +218,12 @@ header h1 {
   border-radius: 15px;
   border: none;
   outline: none;
+  transition: all 0.25s;
+}
+
+.reset-quiz:hover {
+
+  opacity: 0.8;
 }
 
 .return-home {
@@ -210,6 +233,12 @@ header h1 {
   background: none;
   border: none;
   outline: none;
+  transition: all 0.25s;
+}
+
+.return-home:hover {
+
+  text-decoration: underline #818181 2px;
 }
 
 /* ------------------------------------------create Quiz ------------------------------------------------------------- */
@@ -305,15 +334,15 @@ header h1 {
 }
 
 .quizz-preview .title-quizz {
-  padding: 20px;
-  color: #ffffff;
-  font-size: 20px;
+    padding: 20px;
+    color: #FFFFFF;
+    font-size: 20px;
 
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  word-break: break-all;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    word-break: break-all;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
 }
 
 .page-create-quizz button:hover {
@@ -343,6 +372,7 @@ header h1 {
   font-weight: 700;
   padding-bottom: 15px;
 }
+
 
 .create-answers {
   padding-bottom: 25px;
@@ -453,7 +483,7 @@ header h1 {
   width: 1051px;
 }
 
-.all-quizzes-container > h1 {
+.all-quizzes-container > h2 {
   width: 158px;
   height: 23px;
   font-style: normal;
@@ -507,6 +537,7 @@ header h1 {
   color: #ffffff;
   display: flex;
   align-items: center;
+  overflow: hidden;
   word-break: break-word;
   margin-bottom: 7px;
 }
@@ -644,7 +675,7 @@ header h1 {
     max-height: 200px;
   }
 
-  .quiz-page-title h2 {
+  .quiz-page-title h1 {
     font-size: 20px;
     line-height: 30px;
   }
@@ -718,6 +749,16 @@ header h1 {
     width: 100%;
   }
 
+    .first-page-container,
+    .first-page-content,
+    .user-quizzes-container-empty,
+    .user-quizzes-container-regular,
+    .all-quizzes-container,
+    .quizzes-container,
+    .quiz,
+    .quiz h1 {
+        width: 100%;
+    }
   .quizzes-container {
     flex-direction: column;
     align-items: center;

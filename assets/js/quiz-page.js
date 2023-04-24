@@ -1,21 +1,21 @@
+import { getCardIndexByClassList } from "./main.js";
+import { getQuizzes } from "./first-page.js";
+
 let userQuizResult;
 let quiz = [];
 
 const url = 'https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes';
-const token = 'aNWJQMxCMeOOL5Y0ThO5bESy'
 const loadingScreen = document.querySelector(".loading-screen");
 
-axios.defaults.headers.common['Authorization'] = token;
-
 function getQuizById(id) {
-    const firstPageContainer = document.querySelector(".first-page-container");
-    firstPageContainer.classList.add('hidden')
-    const createPageContainer = document.querySelector(".container");
-    createPageContainer.classList.add('hidden')
-    const quizPageContainer = document.querySelector('.quiz-page-container')
-    quizPageContainer.classList.remove('hidden')
+
+    document.querySelector(".first-page-container").classList.add('hidden');
+    document.querySelector(".container").classList.add('hidden');
+    document.querySelector('.quiz-page-container').classList.remove('hidden');
+
     loadingScreen.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
+
     axios.get(`${url}/${id}`)
     .then(res => {
 
@@ -23,6 +23,8 @@ function getQuizById(id) {
         renderQuiz();
     })
     .catch(err => {
+
+        console.log(err);
 
         if (err.response.status === 404) {
             alert("ID invalido!");
@@ -34,14 +36,13 @@ function getQuizById(id) {
 }
 
 function renderQuiz() {
-    loadingScreen.classList.add("hidden");
-    document.body.classList.remove("overflow-hidden");
+
     userQuizResult = 0;
     
     /* Creates quiz title */
     const quizTitle = document.querySelector(".quiz-page-title");
     quizTitle.innerHTML = `
-        <div class="image-overlay">
+        <div class="image-overlay" data-test="banner">
             <img src="${quiz.image}"/>
         </div>
         <h2>${quiz.title}</h2>
@@ -66,8 +67,8 @@ function renderQuiz() {
 
         /* Creates quiz card */
         const cardTitle = `
-            <div class="quiz-page-card">
-                <div class="card-title">
+            <div class="quiz-page-card" data-test="question">
+                <div class="card-title" data-test="question-title">
                     <h3>${question.title}</h3>
                 </div>
             <div class="card-questions question-${questionIndex}">
@@ -81,9 +82,9 @@ function renderQuiz() {
 
             /* Creates question answers */
             cardContent += `
-                <div class="card-content answers-${answersIndex}" onclick="selectCard(this)">
+                <div class="card-content answers-${answersIndex}" data-test="answer" onclick="selectCard(this)">
                     <img src="${answers.image}"/>
-                    <h4>${answers.text}</h4>
+                    <h4 data-test="answer-text">${answers.text}</h4>
                 </div>
             `;
             answersIndex++;
@@ -101,6 +102,8 @@ function renderQuiz() {
         const cardTitle = cardTitles[i];
         cardTitle.style.setProperty('background-color', colors[i]);
     }
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
 }
 
 function renderFinalResult() {
@@ -131,12 +134,12 @@ function renderFinalResult() {
     const quizContent = document.querySelector(".quiz-page-content");
     quizContent.innerHTML += `
         <div class="quiz-page-final-card">
-            <div class="card-title">
+            <div class="card-title" data-test="level-title">
                 <h3>${userQuizResult}% de acerto: ${quizLevels[userLevel].title}</h3>
             </div>
             <div class="final-card-content">
-                <img src="${quizLevels[userLevel].image}"/>
-                <h4>${quizLevels[userLevel].text}</h4>
+                <img data-test="level-img" src="${quizLevels[userLevel].image}"/>
+                <h4 data-test="level-text">${quizLevels[userLevel].text}</h4>
             </div>
         </div>
     `;
@@ -166,12 +169,6 @@ function scrollToNextQuestion() {
             break;
         }
     }
-}
-
-function getCardIndexByClassList(card) {
-
-    /* Return index value from question/anwser card */
-    return Number(card.classList[1].split("-")[1]);
 }
 
 function selectCard(selector) {
@@ -250,10 +247,12 @@ function resetQuiz() {
 }
 
 function toggleQuizPage() {
-    document.querySelector(".first-page-container").classList.toggle("hidden");
+    
+    document.querySelector(".quiz-page-buttons").classList.add("hidden");
     document.querySelector(".quiz-page-container").classList.toggle("hidden");
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
     getQuizzes();
 }
 
-export { getQuizById, selectCard, resetQuiz, toggleQuizPage }
+export { getQuizById, selectCard, resetQuiz, toggleQuizPage };

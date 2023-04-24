@@ -6,19 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="icon" type="image/png" sizes="36x36" href="./assets/image/logo.png">
     <title>BuzzQuizz</title>
 </head>
 <body>
 
     <header>
-        <a href="./"><h1>BuzzQuizz</h1></a>
+        <a href="./" title="BuzzQuizz"><h1>BuzzQuizz</h1></a>
     </header>
-    
-    <div class="container hidden"></div>
 
     <div class="loading-screen">
         <span class="loader"></span>
         <h1>Carregando</h1>
+    </div>
+
+    <div class="first-page-container hidden">
+        <div class="first-page-content">
+            <div class="user-quizzes-container-empty">
+                <div class="message-container">
+                    Você não criou nenhum quizz ainda :(
+                </div>
+                <div class="create-quiz-btn" data-test="create-btn" onclick="createQuizz()">
+                    <p>Criar Quizz</p>
+                </div>
+            </div>
+            <div class="user-quizzes-container-regular hidden">
+                <div class="header">
+                    <h1>Seus Quizzes</h1>
+                    <ion-icon name="add-circle" data-test="create-btn" onclick="createQuizz()"></ion-icon>
+                </div>
+                <div class="quizzes-container"></div>
+            </div>
+            <div class="all-quizzes-container">
+                <h2>Todos os Quizzes</h2>
+                <div class="quizzes-container"></div>
+            </div>
+        </div>
     </div>
 
     <div class="quiz-page-container hidden">
@@ -26,34 +49,12 @@
         <main class="quiz-page-content">
         </main>
         <div class="quiz-page-buttons hidden">
-            <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quizz</button>
-            <button class="return-home" onclick="toggleQuizPage()">Voltar pra home</button>
+            <button class="reset-quiz" data-test="restart" onclick="resetQuiz()">Reiniciar Quizz</button>
+            <button class="return-home" data-test="go-home" onclick="toggleQuizPage()">Voltar pra home</button>
         </div>
     </div>
 
-    <div class="first-page-container hidden">
-        <div class="first-page-content">
-            <div class="user-quizzes-container-empty hidden">
-                <div class="message-container">
-                    Você não criou nenhum quizz ainda :(
-                </div>
-                <div class="create-quiz-btn" onclick="createQuizz()">
-                    <p>Criar Quizz</p>
-                </div>
-            </div>
-            <div class="user-quizzes-container-regular hidden">
-                <div class="header">
-                    <h1>Seus quizzes</h1>
-                    <ion-icon name="add-circle" onclick="createQuizz()"></ion-icon>
-                </div>
-                <div class="quizzes-container"></div>
-            </div>
-            <div class="all-quizzes-container">
-                <h1>Todos os quizzes</h1>
-                <div class="quizzes-container"></div>
-            </div>
-        </div>
-    </div>
+    <div class="container hidden"></div>
 
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
