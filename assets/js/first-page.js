@@ -47,19 +47,19 @@ function displayQuizzes(quizzes) {
             Array.from(quizzes.data).forEach(quiz => {
                 if (temp.includes(quiz.id)) {
                     userQuizzesContainer.innerHTML += `
-                        <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                        <div class="quiz id-${quiz.id}" data-test="my-quiz" onclick="displayQuizPage(this)">
                             <img src="${quiz.image}" alt="">
                             <h1>${quiz.title}</h1>
                             <div class="bonus-buttons">
-                                <ion-icon name="create-outline"></ion-icon>
-                                <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
+                                <ion-icon name="create-outline" data-test="edit"></ion-icon>
+                                <ion-icon name="trash-sharp" data-test="delete" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
                             </div>
                         </div>
                     `;
                 }
                 else {
                     allQuizzesContainer.innerHTML += `
-                        <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                        <div class="quiz id-${quiz.id}" data-test="others-quiz" onclick="displayQuizPage(this)">
                             <img src="${quiz.image}" alt="">
                             <h1>${quiz.title}</h1>
                         </div>
@@ -72,12 +72,12 @@ function displayQuizzes(quizzes) {
             document.querySelector(".user-quizzes-container-regular").classList.add("hidden");
             Array.from(quizzes.data).forEach(quiz => {
                 allQuizzesContainer.innerHTML += `
-                    <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                    <div class="quiz id-${quiz.id}" data-test="others-quiz" onclick="displayQuizPage(this)">
                         <img src="${quiz.image}" alt="">
                         <h1>${quiz.title}</h1>
                         <div class="bonus-buttons">
-                                <ion-icon name="create-outline"></ion-icon>
-                                <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
+                            <ion-icon name="create-outline"></ion-icon>
+                            <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
                         </div>
                     </div>
                 `;
@@ -89,7 +89,7 @@ function displayQuizzes(quizzes) {
     else {
         Array.from(quizzes.data).forEach(quiz => {
             allQuizzesContainer.innerHTML += `
-                <div class="quiz id-${quiz.id}" onclick="displayQuizPage(this)">
+                <div class="quiz id-${quiz.id}" data-test="others-quiz" onclick="displayQuizPage(this)">
                     <img src="${quiz.image}" alt="">
                     <h1>${quiz.title}</h1>
                 </div>
