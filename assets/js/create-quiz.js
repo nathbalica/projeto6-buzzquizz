@@ -142,7 +142,11 @@ function inputQuizzQuestions(){
                 "isCorrectAnswer": false
             }
             
-
+            const isValidAnswerImageIncorrect = validateUrl(answersIncorrect.image);
+            if(!isValidAnswerImageIncorrect){
+                alert("Por favor, preencha os dados da resposta incorreta corretamente");
+                return false;
+            }
             dataQuestions.answers.push(answersIncorrect)
         }
 
@@ -331,15 +335,18 @@ function renderLevelsQuizz(){
 
 
 function renderLevelsRepeated(index){
-    let wholeLevel;
+    let wholeLevel, hiddenIcon;
     if(index !== 1){
         wholeLevel = 'hidden';
+    }
+    if(index === 1){
+        hiddenIcon = 'hidden'
     }
     return `
         <div data-test="level-ctn" class="subtitle inputs">
             <div data-test="toggle" class="title-icon" onclick="toggleQuestion(event)">
                 <h4 class="number-question">Nivel ${index}</h4>
-                <div class="icon">
+                <div class="icon ${hiddenIcon}">
                     <ion-icon name="create-outline"></ion-icon>
                 </div>
             </div>
@@ -349,7 +356,7 @@ function renderLevelsRepeated(index){
                     <input data-test="level-input" type="text" class="nivel${index}-text" placeholder="Título do nível" />
                     <input data-test="level-percent-input" type="text" class="nivel${index}-hits" placeholder="% de acerto mínima" />
                     <input data-test="level-img-input" type="text" class="nivel${index}-url" placeholder="URL da imagem do nível" />
-                    <input data-test="level-description-input" type="text" class="nivel${index}-description" placeholder="Descrição do nível" />
+                    <textarea data-test="level-description-input" type="text" class="nivel${index}-description description" placeholder="Descrição do nível"></textarea>
                 </div>
             </div>
         </div>
@@ -360,7 +367,6 @@ function validateInputLevels(){
     if(!inputQuizzLevels()){
         return;
     }
-
     saveDataQuizz();
 }
 
@@ -373,7 +379,7 @@ function saveDataQuizz(){
     }
 
     document.querySelector(".levels").classList.add("hidden");
-
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     loadingScreen.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
 
@@ -387,18 +393,19 @@ function saveDataQuizz(){
 }
 
 function AnswerWorked(response){
-    
     console.info(`Quiz ${response.data.key} criado com Sucesso!!!`);
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
     return response.data;
 }
 
 function storeUserCreatedQuizId(id, key) {
-    const storedIds = JSON.parse(localStorage.getItem("id")) || [];
+    const storedIds = JSON.parse(localStorage.getItem("ids")) || [];
     const quizIndex = storedIds.findIndex(quiz => quiz.id === id);
     
     if (quizIndex === -1) {
       storedIds.push({ id, key });
-      localStorage.setItem("id", JSON.stringify(storedIds));
+      localStorage.setItem("ids", JSON.stringify(storedIds));
       renderAcessQuizz(id);
     }
 
@@ -422,7 +429,7 @@ function renderAcessQuizz(id){
     contentQuizz.innerHTML = `
     <div data-test="success-banner" class="page-create-quizz">
         <h3 class="title">Seu quizz está pronto!</h3>
-        <div class="quizz-preview onclick="getQuizById(${id})">
+        <div data-test="my-quiz" class="quizz-preview" onclick="getQuizById(${id})">
             <img src="${createQuizz.image}"/>
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
