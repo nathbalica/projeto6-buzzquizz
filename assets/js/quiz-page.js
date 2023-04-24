@@ -1,4 +1,4 @@
-import { getCardIndexByClassList } from "./main.js";
+import { getIndexByClassList } from "./main.js";
 import { getQuizzes } from "./first-page.js";
 
 let userQuizResult;
@@ -153,7 +153,7 @@ function scrollToNextQuestion() {
     const selectedCardsIds = [];
 
     selectedCards.forEach(card => {
-        selectedCardsIds.push(getCardIndexByClassList(card));
+        selectedCardsIds.push(getIndexByClassList(card));
     });
 
     const quizPageCards = document.querySelectorAll(".quiz-page-card");
@@ -161,7 +161,7 @@ function scrollToNextQuestion() {
     
     for (let i = 0; i < cardQuestions.length; i++) {
         
-        const cardId = getCardIndexByClassList(cardQuestions[i]);
+        const cardId = getIndexByClassList(cardQuestions[i]);
         
         if (cardId !== selectedCardsIds[i]) {
             quizPageCards[i].scrollIntoView();
@@ -176,8 +176,8 @@ function selectCard(selector) {
 
     if (!cardQuestion.classList.contains("selected-card")) {
 
-        const questionIndex = getCardIndexByClassList(cardQuestion);
-        const selectedCardIndex = getCardIndexByClassList(selector);
+        const questionIndex = getIndexByClassList(cardQuestion);
+        const selectedCardIndex = getIndexByClassList(selector);
         const quizAnwsers =  quiz.questions[questionIndex].answers;
         
         /* Check user answer */
