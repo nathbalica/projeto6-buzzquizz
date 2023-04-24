@@ -390,6 +390,37 @@ header h1 {
   margin: 45px 0 0;
 }
 
+.page-create-quizz .description{
+  /* padding: 10px 10px 137px 10px; */
+  width: 100%;
+  border: 1px solid #D1D1D1;
+  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 9px;
+  font-size: 19px;
+  height: 137px;
+
+  font-weight: 400;
+  font-style: italic;
+  font-family: 'Roboto', sans-serif;
+}
+
+.page-create-quizz .description::placeholder{
+  color: #BABABA;
+}
+.page-create-quizz .description:focus {
+  color: #333;
+  font-weight: 600;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* .page-create-quizz .description::placeholder{
+ padding-bottom: 100%;
+ background-color: #009C22;
+} */
+
 .page-create-quizz .back-home {
   margin: 10px 0 0;
   background-color: transparent;

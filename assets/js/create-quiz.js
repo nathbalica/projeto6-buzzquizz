@@ -335,7 +335,7 @@ function renderLevelsQuizz(){
 
 
 function renderLevelsRepeated(index){
-    let wholeLevel;
+    let wholeLevel, hiddenIcon;
     if(index !== 1){
         wholeLevel = 'hidden';
     }
@@ -356,7 +356,7 @@ function renderLevelsRepeated(index){
                     <input data-test="level-input" type="text" class="nivel${index}-text" placeholder="Título do nível" />
                     <input data-test="level-percent-input" type="text" class="nivel${index}-hits" placeholder="% de acerto mínima" />
                     <input data-test="level-img-input" type="text" class="nivel${index}-url" placeholder="URL da imagem do nível" />
-                    <input data-test="level-description-input" type="text" class="nivel${index}-description" placeholder="Descrição do nível" />
+                    <textarea data-test="level-description-input" type="text" class="nivel${index}-description description" placeholder="Descrição do nível"></textarea>
                 </div>
             </div>
         </div>
