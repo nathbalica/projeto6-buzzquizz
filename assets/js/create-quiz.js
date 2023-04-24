@@ -429,7 +429,7 @@ function renderAcessQuizz(id){
     contentQuizz.innerHTML = `
     <div data-test="success-banner" class="page-create-quizz">
         <h3 class="title">Seu quizz está pronto!</h3>
-        <div class="quizz-preview onclick="getQuizById(${id})">
+        <div data-test="my-quiz" class="quizz-preview" onclick="getQuizById(${id})">
             <img src="${createQuizz.image}"/>
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
