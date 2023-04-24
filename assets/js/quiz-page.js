@@ -12,7 +12,7 @@ function getQuizById(id) {
     document.querySelector(".first-page-container").classList.add('hidden');
     document.querySelector(".container").classList.add('hidden');
     document.querySelector('.quiz-page-container').classList.remove('hidden');
-
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     loadingScreen.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
 
