@@ -3,6 +3,7 @@ import { getQuizById } from "./quiz-page.js";
 import { getQuizzes } from "./first-page.js";
 
 const contentQuizz = document.querySelector(".container");
+const loadingScreen = document.querySelector(".loading-screen");
 let createQuizz;
 let listQuestions = [];
 let listLevels = [];
@@ -29,8 +30,6 @@ function startQuizz(){
         </div>
     `;
 }
-
-startQuizz();
 
 function validBasicQuizzInformation(){
 
@@ -344,30 +343,40 @@ function saveDataQuizz(){
 
     console.log(saveData);
     const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData);
+    console.log(saveData)
     promise.then(response => {
         AnswerWorked(response);
-        storeUserCreatedQuizId(response.data.id);
+        storeUserCreatedQuizId(response.data.id, response.data.key);
     });
 }
 
 function AnswerWorked(response){
-    getQuizzes();
+    
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     console.info(`Quiz ${response.data.key} criado com Sucesso!!!`);
     return response.data;
 }
 
-function storeUserCreatedQuizId(id) {
+function storeUserCreatedQuizId(id, key) {
     const storedIds = JSON.parse(localStorage.getItem("id")) || [];
     const quizIndex = storedIds.findIndex(quiz => quiz.id === id);
-  
+    
     if (quizIndex === -1) {
-      storedIds.push({ id });
+      storedIds.push({ id, key });
       localStorage.setItem("id", JSON.stringify(storedIds));
-
       renderAcessQuizz(id);
     }
-  
-    return storedIds.map((quiz) => ({ id: quiz.id }));
+    return storedIds.map((quiz) => ({ id: quiz.id, key: quiz.key }));
+}
+
+function returnToHome() {
+    const firstPageContainer = document.querySelector(".first-page-container");
+    const createQuizcontainer = document.querySelector(".container");
+    createQuizcontainer.classList.add('hidden');
+    firstPageContainer.classList.remove('hidden');
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+    getQuizzes();
 }
 
 function renderAcessQuizz(id){
@@ -379,10 +388,10 @@ function renderAcessQuizz(id){
             <h4 class="title-quizz">${createQuizz.title}</h4>
         </div>
         <button data-test="go-quiz" class="acess-quizz" onclick="getQuizById(${id})">Acessar Quizz</button>
-        <button data-test="go-home" class="back-home" onclick="toggleCreateQuiz()">Voltar pra home</button>
+        <button data-test="go-home" class="back-home" onclick="returnToHome()">Voltar pra home</button>
 
     </div>
     `;
 }
 
-export { startQuizz, validateInputLevels, toggleQuestion, renderLevelsQuizz, renderQuestionsQuizz };
+export { startQuizz, validateInputLevels, toggleQuestion, renderLevelsQuizz, renderQuestionsQuizz, returnToHome };

@@ -5,12 +5,16 @@ let userQuizResult;
 let quiz = [];
 
 const url = 'https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes';
+const loadingScreen = document.querySelector(".loading-screen");
 
 function getQuizById(id) {
 
     document.querySelector(".first-page-container").classList.add('hidden');
     document.querySelector(".container").classList.add('hidden');
     document.querySelector('.quiz-page-container').classList.remove('hidden');
+
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
 
     axios.get(`${url}/${id}`)
     .then(res => {
@@ -19,6 +23,8 @@ function getQuizById(id) {
         renderQuiz();
     })
     .catch(err => {
+
+        console.log(err);
 
         if (err.response.status === 404) {
             alert("ID invalido!");
@@ -96,6 +102,8 @@ function renderQuiz() {
         const cardTitle = cardTitles[i];
         cardTitle.style.setProperty('background-color', colors[i]);
     }
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
 }
 
 function renderFinalResult() {
@@ -241,8 +249,9 @@ function resetQuiz() {
 function toggleQuizPage() {
     
     document.querySelector(".quiz-page-buttons").classList.add("hidden");
-    document.querySelector(".first-page-container").classList.toggle("hidden");
     document.querySelector(".quiz-page-container").classList.toggle("hidden");
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
     getQuizzes();
 }
 

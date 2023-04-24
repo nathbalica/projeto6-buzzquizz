@@ -1,7 +1,7 @@
 /* Import onclick functions */
-import { displayQuizPage, createQuizz } from "./first-page.js";
+import { displayQuizPage, createQuizz, deleteQuiz } from "./first-page.js";
 import { getQuizById, selectCard, resetQuiz, toggleQuizPage } from "./quiz-page.js";
-import { validateInputLevels, toggleQuestion, renderLevelsQuizz, renderQuestionsQuizz } from "./create-quiz.js";
+import { validateInputLevels, toggleQuestion, renderLevelsQuizz, renderQuestionsQuizz, returnToHome } from "./create-quiz.js";
 
 function startAxios() {
 
@@ -28,6 +28,7 @@ function toggleCreateQuiz() {
 /* Global functions */
 window.displayQuizPage = displayQuizPage;
 window.createQuizz = createQuizz;
+window.deleteQuiz = deleteQuiz;
 window.getQuizById = getQuizById;
 window.selectCard = selectCard;
 window.resetQuiz = resetQuiz;
@@ -37,5 +38,6 @@ window.toggleQuestion = toggleQuestion;
 window.renderLevelsQuizz = renderLevelsQuizz;
 window.renderQuestionsQuizz = renderQuestionsQuizz;
 window.toggleCreateQuiz = toggleCreateQuiz;
+window.returnToHome = returnToHome;
 
 export { startAxios, getCardIndexByClassList, toggleCreateQuiz };
