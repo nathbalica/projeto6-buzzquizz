@@ -1,4 +1,4 @@
-import { startAxios, getCardIndexByClassList } from "./main.js";
+import { startAxios, getIndexByClassList } from "./main.js";
 import { getQuizById } from "./quiz-page.js";
 import { startQuizz } from "./create-quiz.js";
 
@@ -47,7 +47,7 @@ function displayQuizzes(quizzes) {
                             <img src="${quiz.image}" alt="">
                             <h1>${quiz.title}</h1>
                             <div class="bonus-buttons">
-                                <ion-icon name="create-outline" data-test="edit"></ion-icon>
+                                <ion-icon name="create-outline" data-test="edit" onclick="editQuiz(this); event.stopPropagation()"></ion-icon>
                                 <ion-icon name="trash-sharp" data-test="delete" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
                             </div>
                         </div>
@@ -95,6 +95,7 @@ function displayQuizzes(quizzes) {
 }
 
 function createQuizz() {
+
     firstPageContainer.classList.add("hidden");
     createQuizcontainer.classList.remove("hidden");
     startQuizz();
@@ -102,35 +103,90 @@ function createQuizz() {
 
 function displayQuizPage(selector) {
 
-    const quizId = getCardIndexByClassList(selector);
+    const quizId = getIndexByClassList(selector);
     firstPageContainer.classList.add("hidden");
     quizPageContainer.classList.remove("hidden");
 
     getQuizById(quizId);
-}   
+}
 
-function deleteQuiz(deleteButton) {
-    if (confirm("Tem certeza de que deseja excluir este quiz?")) {
-        const quiz = deleteButton.parentElement.parentElement;
-        const id = quiz.classList[1].replace("id-", "");
-        const storedIds = JSON.parse(localStorage.getItem("id")) || [];
-        for (let i = 0; i < storedIds.length; i++) {
-            if (Number(id) === storedIds[i].id) {
-                
-                const url = `https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/${id}`;
-                const config = {
-                    headers:{
-                      "Secret-Key": storedIds[i].key
-                    }
-                  };
-                loadingScreen.classList.remove("hidden");
-                document.body.classList.add("overflow-hidden");
-                axios.delete(url, config)
-                .then(getQuizzes)
+function findStoredId(quiz, method) {
+
+    const id = getIndexByClassList(quiz);
+    const storedIds = JSON.parse(localStorage.getItem("id")) || [];
+
+    for (let i = 0; i < storedIds.length; i++) {
+        if (id === storedIds[i].id) {
+
+            loadingScreen.classList.remove("hidden");
+            document.body.classList.add("overflow-hidden");
+            
+            const url = `https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/${id}`;
+
+            if (method === 'put') {
+
+                const quizUrl = 'https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes'
+
+                axios.get(`${quizUrl}/${id}`)
+                .then(res => {
+            
+                    const quiz = res.data;
+                    const config = {
+
+                        body: {
+                            title: quiz.title,
+                            image: quiz.image,
+                            questions: quiz.questions,
+                            levels: quiz.levels
+                        },
+                    
+                        headers: {
+                            "Secret-Key": storedIds[i].key 
+                        }
+                    };
+                    const packageStoredID = {url: url, config: config};
+                    console.log(packageStoredID.url, packageStoredID.config);
+                    axios.put(packageStoredID.url, packageStoredID.config)
+                    .then(() => {
+                        console.log("teste");
+                    })
+                    .catch(e => console.log(e));
+                })
                 .catch(e => console.log(e));
             }
+
+            else if (method === 'delete') {
+
+                const config = {
+                    headers:{
+                        "Secret-Key": storedIds[i].key
+                    }
+                };
+                return {url: url, config: config};
+            }             
         }
     }
 }
 
-export { getQuizzes, displayQuizzes, displayQuizPage, createQuizz, deleteQuiz };
+function editQuiz(editButton) {
+
+    const quiz = editButton.parentElement.parentElement;
+    const method = "put";
+    findStoredId(quiz, method);
+}
+
+function deleteQuiz(deleteButton) {
+    if (confirm("Tem certeza de que deseja excluir este quiz?")) {
+        const quiz = deleteButton.parentElement.parentElement;
+        const method = "delete";
+        const packageStoredID = findStoredId(quiz, method);
+
+        console.log(packageStoredID);
+
+        axios.delete(packageStoredID.url, packageStoredID.config)
+        .then(getQuizzes)
+        .catch(e => console.log(e));
+    }
+}
+
+export { getQuizzes, displayQuizzes, displayQuizPage, createQuizz, editQuiz, deleteQuiz };
