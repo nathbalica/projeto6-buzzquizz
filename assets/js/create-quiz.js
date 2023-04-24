@@ -19,19 +19,36 @@ function startQuizz(){
     }
     
     contentQuizz.innerHTML = `
-        <div class="page-create-quizz">
+    <div class="page-create-quizz">
         <h3 class="title">Comece pelo começo</h3>
         <div class="inputs">
             <input type="text" data-test="title-input" class="title-input" placeholder="Título do seu quizz">
+            <div></div> <!-- div vazia para a mensagem de erro do título -->
             <input type="text" data-test="img-input" class="url" placeholder="URL da imagem do seu quizz">
+            <div></div> <!-- div vazia para a mensagem de erro da imagem -->
             <input type="text" data-test="questions-amount-input" class="amount-questions" placeholder="Quantidade de perguntas do quizz">
+            <div></div> <!-- div vazia para a mensagem de erro da quantidade de perguntas -->
             <input type="text" data-test="levels-amount-input" class="amount-levels" placeholder="Quantidade de níveis do quizz">
+            <div></div> <!-- div vazia para a mensagem de erro da quantidade de níveis -->
         </div>
         <button data-test="go-create-questions" onclick="renderQuestionsQuizz()">Prosseguir pra criar perguntas</button>
-        </div>
+  </div>
     `;
 }
 
+function addInvalidMsg(input, msg) {
+    const container = input.nextElementSibling; // seleciona o próximo elemento irmão do input
+    const msgElem = container.querySelector('.invalid-msg'); // seleciona a mensagem de erro
+    if (msgElem) {
+      msgElem.textContent = msg; // atualiza a mensagem de erro existente
+    } else {
+      const msgElem = document.createElement('div'); // cria um novo elemento de mensagem de erro
+      msgElem.classList.add('invalid-msg');
+      msgElem.textContent = msg;
+      container.appendChild(msgElem); // adiciona a mensagem de erro ao próximo elemento irmão do input
+    }
+}
+  
 function validBasicQuizzInformation(){
 
     const title = document.querySelector(".title-input").value;
@@ -39,40 +56,35 @@ function validBasicQuizzInformation(){
     const amountQuestions = document.querySelector('.inputs .amount-questions').value;
     const amountLevels = document.querySelector(".amount-levels").value;
 
+
     createQuizz.title = title;
     createQuizz.image = url;
     createQuizz.amountQuestions = parseInt(amountQuestions);
     createQuizz.amountLevels = parseInt(amountLevels);
 
     const tituloRegex = /^.{20,65}$/;
-
-    if(!tituloRegex.test(createQuizz.title)){
-        alert("O título deve conter entre 20 e 65 caracteres.");
+    if (!tituloRegex.test(createQuizz.title)) {
+        addInvalidMsg(document.querySelector('.title-input'), 'O título deve conter entre 20 e 65 caracteres.');
         return false;
-    }else if(!validateUrl(createQuizz.image)){
-        alert("A URL da imagem não é válida.");
-        // console.log("invalido")
+      } else if (!validateUrl(createQuizz.image)) {
+        addInvalidMsg(document.querySelector('.url'), 'A URL da imagem não é válida.');
         return false;
-    }else if(createQuizz.amountQuestions < 3 || createQuizz.amountQuestions === ''){
-        alert("O número mínimo de perguntas é 3.");
-        // console.log("invalido")
+      } else if (createQuizz.amountQuestions < 3 || createQuizz.amountQuestions === '') {
+        addInvalidMsg(document.querySelector('.amount-questions'), 'Por favor, preencha o campo quantidade de perguntas do quizz (mínimo 3).');
         return false;
-    }
-    else if(!createQuizz.amountQuestions){
-        alert(`Por favor, preencha o campo Quantidade de perguntas do quizz`)
+      } else if (!createQuizz.amountQuestions) {
+        addInvalidMsg(document.querySelector('.amount-questions'), 'Por favor, preencha o campo quantidade de perguntas do quizz.');
         return false;
-
-    }
-    else if(!createQuizz.amountLevels){
-        alert(`Por favor, preencha o campo Quantidade de Niveis do quizz:`)
+      } else if (!createQuizz.amountLevels) {
+        addInvalidMsg(document.querySelector('.amount-levels'), 'Por favor, preencha o campo Quantidade de níveis do quizz.');
         return false;
-
-    }else if(createQuizz.amountLevels < 2 || createQuizz.amountLevels === ''){
-        alert("O número mínimo de níveis é 2.");
+      } else if (createQuizz.amountLevels < 2 || createQuizz.amountLevels === '') {
+        addInvalidMsg(document.querySelector('.amount-levels'), 'Por favor, preencha o campo com a quantidade de níveis do quizz (mínimo 2).');
         return false;
-    }else{
+      } else {
         return true;
-    }
+      }
+      
 }
 
 function validateUrl(url) {
@@ -97,13 +109,15 @@ function inputQuizzQuestions(){
 
         // Validação do texto da pergunta
         if (dataQuestions.title.length < 20) {
-            alert("Por favor, insira um texto de pergunta com no mínimo 20 caracteres");
+            // alert("Por favor, insira um texto de pergunta com no mínimo 20 caracteres");
+            addInvalidMsg(document.querySelector(`.question-${i}-texto`), 'Por favor, insira um texto de pergunta com no mínimo 20 caracteres');
             return false;
         }
 
         // Validação da cor de fundo
         if (!dataQuestions.color.match(/^#[0-9A-F]{6}$/i)) {
-            alert("Por favor, insira uma cor em formato hexadecimal (exemplo: #FFA500)");
+            // alert("Por favor, insira uma cor em formato hexadecimal (exemplo: #FFA500)");
+            addInvalidMsg(document.querySelector(`.question-${i}-color`), 'Por favor, insira uma cor em formato hexadecimal (exemplo: #FFA500)');
             return false;
         }
 
@@ -115,9 +129,14 @@ function inputQuizzQuestions(){
 
         const isValidAnswerImage = validateUrl(answersCorrect.image);
 
+        if(answersCorrect === '' || answersCorrect.image === ''){
+            addInvalidMsg(document.querySelector(`.question-${i}-correct-answer1 .url`), 'Campos vazios, insira uma resposta correta');
+            return false;
+        }
         // Validação da resposta correta
-        if (answersCorrect.text === "" || answersCorrect.image === "" || !isValidAnswerImage) {
-            alert("Por favor, preencha os dados da resposta correta corretamente");
+        if (!isValidAnswerImage) {
+            // alert("Por favor, preencha os dados da resposta correta corretamente");
+            addInvalidMsg(document.querySelector(`.question-${i}-correct-answer1 .url`), 'Por favor, insira uma url valida');
             return false;
         }
 
@@ -144,7 +163,8 @@ function inputQuizzQuestions(){
             
             const isValidAnswerImageIncorrect = validateUrl(answersIncorrect.image);
             if(!isValidAnswerImageIncorrect){
-                alert("Por favor, preencha os dados da resposta incorreta corretamente");
+                // alert("Por favor, preencha os dados da resposta incorreta corretamente");
+                addInvalidMsg(document.querySelector(`.question-${i}-incorrect-answer${j} .url`), 'Por favor, preencha a url da resposta incorreta corretamente');
                 return false;
             }
             dataQuestions.answers.push(answersIncorrect)
@@ -152,14 +172,22 @@ function inputQuizzQuestions(){
 
         
         if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer).length === 0) {
-            alert("Por favor, selecione a resposta correta para a pergunta");
-            return false;
+            const invalidMsgErrorCorrect = document.querySelector('.invalid-msg-error-correct');
+            // alert("Por favor, selecione a resposta correta para a pergunta");
+            invalidMsgErrorCorrect.innerHTML = `Por favor, selecione a resposta correta para a pergunta`;
+            invalidMsgErrorCorrect.style.display = "block";
+
           }
     
         if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer === false).length < 1) {
-            alert("Por favor, escreva pelo menos uma alternativa falsa!");
+            // alert("Por favor, escreva pelo menos uma alternativa falsa!");
+            const invalidMsgError = document.querySelector('.invalid-msg-error');
+            invalidMsgError.innerHTML = `Por favor, escreva pelo menos uma alternativa falsa!`;
+            invalidMsgError.style.display = "block";
+
             return false;
-          }
+            
+        }
     
         listQuestions.push(dataQuestions)
     }
@@ -222,31 +250,46 @@ function renderQuestionsRepeated(index){
             <div class="content-questions ${wholeQuestion}">
                 <div class="create-answers">
                     <input type="text" data-test="question-input" class="question-${index}-texto" placeholder="Texto da pergunta" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <input type="text" data-test="question-color-input" class="question-${index}-color" placeholder="Cor de fundo da pergunta" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                 </div>
 
                 <h4 class="subtitle-answer">Resposta correta</h4>
 
                 <div class="create-answers question-${index}-correct-answer1">
                     <input data-test="correct-answer-input" type="text" class="answer" placeholder="Resposta correta" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <input data-test="correct-img-input" type="text" class="url" placeholder="URL da imagem" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
+                    <div class="invalid-msg-error-correct"></div>
                 </div>
+                
 
                 <h4 class="subtitle-answer">Respostas incorretas</h4>
 
                 <div class="create-answers question-${index}-incorrect-answer0">
                     <input data-test="wrong-answer-input" type="text" class="answer" placeholder="Resposta incorreta 1" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <input data-test="wrong-img-input" type="text" class="url" placeholder="URL da imagem 1" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
+                    <div class="invalid-msg-error"></div>
                 </div>
 
                 <div class="create-answers question-${index}-incorrect-answer1">
                     <input data-test="wrong-answer-input" type="text" class="answer" placeholder="Resposta incorreta 2" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <input data-test="wrong-img-input" type="text" class="url" placeholder="URL da imagem 2" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
+                    <div class="invalid-msg-error"></div>
                 </div>
 
                 <div class="create-answers question-${index}-incorrect-answer2">
                     <input data-test="wrong-answer-input" type="text" class="answer" placeholder="Resposta incorreta 3" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <input data-test="wrong-img-input" type="text" class="url" placeholder="URL da imagem 3" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
+                    <div class="invalid-msg-error"></div>
                 </div>
 
             </div>
@@ -269,29 +312,36 @@ function inputQuizzLevels(){
 
         // Validando Título do nível
         if (dataLevels.title.length < 10) {
-            alert("O título do nível deve ter no mínimo 10 caracteres.");
+            // alert("O título do nível deve ter no mínimo 10 caracteres.");
+            addInvalidMsg(document.querySelector(`.nivel${i}-text`), 'O título do nível deve ter no mínimo 10 caracteres.');
             return false;
         }
     
         // Validando % de acerto mínima
         if (dataLevels.minValue < 0 || dataLevels.minValue > 100) {
-            alert("A % de acerto mínima deve ser um número entre 0 e 100.");
+            // alert("A % de acerto mínima deve ser um número entre 0 e 100.");
+            addInvalidMsg(document.querySelector(`.nivel${i}-hits`), 'A % de acerto mínima deve ser um número entre 0 e 100.');
             return false;
         }
-    
+        
         if (dataLevels.minValue === 0) {
             hasZeroPercentLevel = true;
         }
-    
+        
         // Validando URL da imagem do nível
         if (!validateUrl(dataLevels.image)) {
-            alert("A URL da imagem do nível deve ter formato de URL.");
+            // alert("A URL da imagem do nível deve ter formato de URL.");
+            addInvalidMsg(document.querySelector(`.nivel${i}-url`), 'A URL da imagem do nível deve ter formato de URL.');
             return false;
         }
     
         // Validando Descrição do nível
         if (dataLevels.text.length < 30) {
-            alert("A descrição do nível deve ter no mínimo 30 caracteres.");
+            // alert("A descrição do nível deve ter no mínimo 30 caracteres.");
+            let invalidDescription = document.querySelector('.invalid-error-level');
+            invalidDescription.classList.remove('hidden')
+            invalidDescription.innerHTML = `A descrição do nível deve ter no mínimo 30 caracteres.`;
+            invalidDescription.style.display = "block";
             return false;
         }
 
@@ -300,8 +350,16 @@ function inputQuizzLevels(){
 
 
     if (!hasZeroPercentLevel) {
-      alert("É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%.");
-      return false;
+        // alert("É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%.");
+        let invalid = document.querySelector('.invalid-error-level');
+        invalid.classList.add('hidden')
+
+        let invalidHits = document.querySelector('.invalid-error-level-hits');
+        invalidHits.classList.remove('hidden')
+
+        invalidHits.innerHTML = `É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%.`;
+        invalidHits.style.display = "block";
+        return false;
     }
     return true;
 }
@@ -331,6 +389,8 @@ function renderLevelsQuizz(){
         <button data-test="finish" class="next-create-level" onclick="validateInputLevels()">Finalizar Quizz</button>
     </div>
     `;
+
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
 }
 
 
@@ -354,9 +414,14 @@ function renderLevelsRepeated(index){
             <div class="content-questions ${wholeLevel}">
                 <div class="create-answers">
                     <input data-test="level-input" type="text" class="nivel${index}-text" placeholder="Título do nível" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <input data-test="level-percent-input" type="text" class="nivel${index}-hits" placeholder="% de acerto mínima" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <input data-test="level-img-input" type="text" class="nivel${index}-url" placeholder="URL da imagem do nível" />
+                    <div></div> <!-- div vazia para a mensagem de erro do título -->
                     <textarea data-test="level-description-input" type="text" class="nivel${index}-description description" placeholder="Descrição do nível"></textarea>
+                    <div class="invalid-error-level hidden"></div> <!-- div vazia para a mensagem de erro do título -->
+                    <div class="invalid-error-level-hits hidden"></div>
                 </div>
             </div>
         </div>

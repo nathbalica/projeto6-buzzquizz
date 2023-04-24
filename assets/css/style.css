@@ -303,6 +303,19 @@ header h1 {
   color: #bababa;
 }
 
+
+.invalid-error-level, 
+.invalid-msg-error, 
+.invalid-msg-error-correct,
+.invalid-error-level-hits,
+.invalid-msg {
+  color: red;
+  font-size: 0.8em;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+
 .page-create-quizz button {
   width: 369px;
   height: 54px;
