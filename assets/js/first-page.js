@@ -13,11 +13,7 @@ startAxios();
 getQuizzes();
 
 function getQuizzes() {
-
-    /*
-    loadingScreen.classList.remove("hidden");
-    document.body.classList.add("overflow-hidden");
-    */
+    
     const promise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes");
     promise.then(displayQuizzes);
     promise.catch(error => {
@@ -75,10 +71,6 @@ function displayQuizzes(quizzes) {
                     <div class="quiz id-${quiz.id}" data-test="others-quiz" onclick="displayQuizPage(this)">
                         <img src="${quiz.image}" alt="">
                         <h1>${quiz.title}</h1>
-                        <div class="bonus-buttons">
-                            <ion-icon name="create-outline"></ion-icon>
-                            <ion-icon name="trash-sharp" onclick="deleteQuiz(this); event.stopPropagation();"></ion-icon>
-                        </div>
                     </div>
                 `;
             });
