@@ -28,7 +28,7 @@ function displayQuizzes(quizzes) {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     let hasQuiz = false;
-    const storedIds = JSON.parse(localStorage.getItem("id")) || [];
+    const storedIds = JSON.parse(localStorage.getItem("ids")) || [];
     if (storedIds.length > 0) {
         const temp = [];
         for (let i = 0; i < storedIds.length; i++) {
@@ -113,7 +113,7 @@ function displayQuizPage(selector) {
 function findStoredId(quiz, method) {
 
     const id = getIndexByClassList(quiz);
-    const storedIds = JSON.parse(localStorage.getItem("id")) || [];
+    const storedIds = JSON.parse(localStorage.getItem("ids")) || [];
 
     for (let i = 0; i < storedIds.length; i++) {
         if (id === storedIds[i].id) {
