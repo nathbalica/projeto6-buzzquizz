@@ -755,25 +755,13 @@ header h1 {
   }
 
   /*-----------------------------------------------------------FIRST PAGE STYLE-----------------------------------------------------------------------------------*/
-
-  .first-page-content,
-  .user-quizzes-container-empty,
-  .user-quizzes-container-regular,
-  .all-quizzes-container,
-  .quizzes-container,
-  .quiz,
-  .loading-screen {
-    width: 100%;
-  }
-
     .first-page-container,
     .first-page-content,
     .user-quizzes-container-empty,
     .user-quizzes-container-regular,
     .all-quizzes-container,
     .quizzes-container,
-    .quiz,
-    .quiz h1 {
+    .quiz {
         width: 100%;
     }
   .quizzes-container {
