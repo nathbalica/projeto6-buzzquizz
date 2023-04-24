@@ -400,12 +400,12 @@ function AnswerWorked(response){
 }
 
 function storeUserCreatedQuizId(id, key) {
-    const storedIds = JSON.parse(localStorage.getItem("id")) || [];
+    const storedIds = JSON.parse(localStorage.getItem("ids")) || [];
     const quizIndex = storedIds.findIndex(quiz => quiz.id === id);
     
     if (quizIndex === -1) {
       storedIds.push({ id, key });
-      localStorage.setItem("id", JSON.stringify(storedIds));
+      localStorage.setItem("ids", JSON.stringify(storedIds));
       renderAcessQuizz(id);
     }
 
