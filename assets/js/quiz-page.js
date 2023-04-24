@@ -250,6 +250,7 @@ function toggleQuizPage() {
     
     document.querySelector(".quiz-page-buttons").classList.add("hidden");
     document.querySelector(".quiz-page-container").classList.toggle("hidden");
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     loadingScreen.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
     getQuizzes();

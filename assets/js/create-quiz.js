@@ -360,7 +360,8 @@ function validateInputLevels(){
     if(!inputQuizzLevels()){
         return;
     }
-
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
     saveDataQuizz();
 }
 
@@ -382,9 +383,10 @@ function saveDataQuizz(){
 }
 
 function AnswerWorked(response){
-    
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     console.info(`Quiz ${response.data.key} criado com Sucesso!!!`);
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
     return response.data;
 }
 
