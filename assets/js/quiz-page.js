@@ -38,6 +38,7 @@ function getQuizById(id) {
 function renderQuiz() {
 
     userQuizResult = 0;
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     
     /* Creates quiz title */
     const quizTitle = document.querySelector(".quiz-page-title");
@@ -47,8 +48,6 @@ function renderQuiz() {
         </div>
         <h2>${quiz.title}</h2>
     `;
-
-    quizTitle.scrollIntoView();
 
     const quizContent = document.querySelector(".quiz-page-content");
     quizContent.innerHTML = "";

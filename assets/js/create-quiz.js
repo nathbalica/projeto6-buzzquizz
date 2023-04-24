@@ -321,7 +321,7 @@ function renderLevelsQuizz(){
     let levelsHTML = getLevelsHTML();
 
     contentQuizz.innerHTML = `
-    <div class="page-create-quizz">
+    <div class="page-create-quizz levels">
     <h3 class="title">Agora, decida os níveis</h3>
         ${levelsHTML}
         <button data-test="finish" class="next-create-level" onclick="validateInputLevels()">Finalizar Quizz</button>
@@ -360,8 +360,6 @@ function validateInputLevels(){
     if(!inputQuizzLevels()){
         return;
     }
-    loadingScreen.classList.remove("hidden");
-    document.body.classList.add("overflow-hidden");
     saveDataQuizz();
 }
 
@@ -372,6 +370,11 @@ function saveDataQuizz(){
         questions: listQuestions,
         levels: listLevels
     }
+
+    document.querySelector(".levels").classList.add("hidden");
+
+    loadingScreen.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
 
     console.log(saveData);
     const promise = axios.post('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes', saveData);
@@ -399,6 +402,10 @@ function storeUserCreatedQuizId(id, key) {
       localStorage.setItem("id", JSON.stringify(storedIds));
       renderAcessQuizz(id);
     }
+
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+
     return storedIds.map((quiz) => ({ id: quiz.id, key: quiz.key }));
 }
 
