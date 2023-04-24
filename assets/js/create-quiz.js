@@ -2,6 +2,7 @@ import { toggleCreateQuiz } from "./main.js";
 import { getQuizById } from "./quiz-page.js";
 import { getQuizzes } from "./first-page.js";
 
+
 const contentQuizz = document.querySelector(".container");
 const loadingScreen = document.querySelector(".loading-screen");
 let createQuizz;
@@ -52,11 +53,21 @@ function validBasicQuizzInformation(){
         alert("A URL da imagem não é válida.");
         // console.log("invalido")
         return false;
-    }else if(createQuizz.amountQuestions < 3){
+    }else if(createQuizz.amountQuestions < 3 || createQuizz.amountQuestions === ''){
         alert("O número mínimo de perguntas é 3.");
         // console.log("invalido")
         return false;
-    }else if(createQuizz.amountLevels < 2){
+    }
+    else if(!createQuizz.amountQuestions){
+        alert(`Por favor, preencha o campo Quantidade de perguntas do quizz`)
+        return false;
+
+    }
+    else if(!createQuizz.amountLevels){
+        alert(`Por favor, preencha o campo Quantidade de Niveis do quizz:`)
+        return false;
+
+    }else if(createQuizz.amountLevels < 2 || createQuizz.amountLevels === ''){
         alert("O número mínimo de níveis é 2.");
         return false;
     }else{
@@ -70,11 +81,19 @@ function validateUrl(url) {
 
 function inputQuizzQuestions(){
 
-    const numberQuestions = createQuizz.amountQuestions;
-    for(let i = 1; i <= numberQuestions; i++){
-        let dataQuestions = {};
+    listQuestions = [];
 
-        dataQuestions.title = document.querySelector(`.question-${i}-texto`).value;
+    const numberQuestions = createQuizz.amountQuestions;
+
+    for(let i = 1; i <= numberQuestions; i++){
+        let dataQuestions = {
+            title: '',
+            color: '',
+            answers: []
+          };
+
+        dataQuestions.title = document.querySelector(`.question-${i}-texto`).value
+        dataQuestions.color = document.querySelector(`.question-${i}-color`).value
 
         // Validação do texto da pergunta
         if (dataQuestions.title.length < 20) {
@@ -82,23 +101,20 @@ function inputQuizzQuestions(){
             return false;
         }
 
-        dataQuestions.color = document.querySelector(`.question-${i}-color`).value;
-
         // Validação da cor de fundo
         if (!dataQuestions.color.match(/^#[0-9A-F]{6}$/i)) {
             alert("Por favor, insira uma cor em formato hexadecimal (exemplo: #FFA500)");
             return false;
         }
 
-        dataQuestions.answers = [];
-
-        let answersCorrect = {
+        const answersCorrect = {
             "text": document.querySelector(`.question-${i}-correct-answer1 .answer`).value,
             "image": document.querySelector(`.question-${i}-correct-answer1 .url`).value,
             "isCorrectAnswer": true
         }
 
         const isValidAnswerImage = validateUrl(answersCorrect.image);
+
         // Validação da resposta correta
         if (answersCorrect.text === "" || answersCorrect.image === "" || !isValidAnswerImage) {
             alert("Por favor, preencha os dados da resposta correta corretamente");
@@ -107,34 +123,41 @@ function inputQuizzQuestions(){
 
         dataQuestions.answers.push(answersCorrect);
 
-        for(let j = 0; j <= 2; j++){
+        console.log("Inserindo as respostas corretas:\n")
+        console.log("dataQuestions:", dataQuestions)
+        console.log("ListQuestion:", listQuestions)
+
+        for(let j = 0; j < 3; j++){
+            let answerText = document.querySelector(`.question-${i}-incorrect-answer${j} .answer`).value;
+            let answerImage = document.querySelector(`.question-${i}-incorrect-answer${j} .url`).value;
+            
+
+            if (answerText.trim() === '' || answerImage.trim() === '') {
+                continue; // Skip adding empty answer to dataQuestions
+              }
+
             let answersIncorrect = {
-                "text": document.querySelector(`.question-${i}-incorrect-answer${j} .answer`).value,
-                "image": document.querySelector(`.question-${i}-incorrect-answer${j} .url`).value,
+                "text": answerText,
+                "image": answerImage,
                 "isCorrectAnswer": false
             }
+            
 
-            const isNotValidAnswerImage = validateUrl(answersCorrect.image);
-            // Validação das respostas incorretas
-            if (answersIncorrect.text === "" || answersIncorrect.image === "" || !isNotValidAnswerImage) {
-                alert("Por favor, preencha os dados de todas as respostas incorretas corretamente");
-                return false;
-            }
-
-            dataQuestions.answers.push(answersIncorrect);
+            dataQuestions.answers.push(answersIncorrect)
         }
 
+        
         if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer).length === 0) {
             alert("Por favor, selecione a resposta correta para a pergunta");
             return false;
-        }
-          
-        if (dataQuestions.answers.length < 2) {
-            alert("Por favor, insira pelo menos 2 respostas para a pergunta");
+          }
+    
+        if (dataQuestions.answers.filter(answer => answer.isCorrectAnswer === false).length < 1) {
+            alert("Por favor, escreva pelo menos uma alternativa falsa!");
             return false;
-        }
-
-        listQuestions.push(dataQuestions);
+          }
+    
+        listQuestions.push(dataQuestions)
     }
     return true;
 }
@@ -153,6 +176,9 @@ function getQuestionsHTML(){
 }
 
 function renderQuestionsQuizz(){
+    if(!validBasicQuizzInformation()){
+        return;
+    }
     let questionsHTML = getQuestionsHTML();
 
     contentQuizz.innerHTML = `
@@ -172,16 +198,19 @@ function toggleQuestion(event) {
 
 function renderQuestionsRepeated(index){
 
-    let wholeQuestion;
+    let wholeQuestion, hiddenIcon;
     if(index !== 1){
         wholeQuestion = 'hidden';
+    }
+    if(index === 1){
+        hiddenIcon = 'hidden'
     }
 
     return `
         <div data-test="question-ctn" class="subtitle inputs">
             <div class="title-icon">
                 <h4 class="number-question">Pergunta ${index}</h4>
-                <div class="icon" data-test="toggle" onclick="toggleQuestion(event)">
+                <div class="icon ${hiddenIcon}" data-test="toggle" onclick="toggleQuestion(event)">
                     <ion-icon name="create-outline"></ion-icon>
                 </div>
             </div>
@@ -274,9 +303,7 @@ function inputQuizzLevels(){
 }
 
 function getLevelsHTML(){
-    if(!inputQuizzQuestions()){
-        return;
-    }
+
     const numberLevels = createQuizz.amountLevels;
     let levels = '';
     for(let i = 1; i <= numberLevels; i++){
@@ -287,6 +314,10 @@ function getLevelsHTML(){
 }
 
 function renderLevelsQuizz(){
+    if(!inputQuizzQuestions()){
+        return;
+    }
+
     let levelsHTML = getLevelsHTML();
 
     contentQuizz.innerHTML = `
