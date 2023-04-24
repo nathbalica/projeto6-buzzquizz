@@ -142,7 +142,11 @@ function inputQuizzQuestions(){
                 "isCorrectAnswer": false
             }
             
-
+            const isValidAnswerImageIncorrect = validateUrl(answersIncorrect.image);
+            if(!isValidAnswerImageIncorrect){
+                alert("Por favor, preencha os dados da resposta incorreta corretamente");
+                return false;
+            }
             dataQuestions.answers.push(answersIncorrect)
         }
 
@@ -335,11 +339,14 @@ function renderLevelsRepeated(index){
     if(index !== 1){
         wholeLevel = 'hidden';
     }
+    if(index === 1){
+        hiddenIcon = 'hidden'
+    }
     return `
         <div data-test="level-ctn" class="subtitle inputs">
             <div data-test="toggle" class="title-icon" onclick="toggleQuestion(event)">
                 <h4 class="number-question">Nivel ${index}</h4>
-                <div class="icon">
+                <div class="icon ${hiddenIcon}">
                     <ion-icon name="create-outline"></ion-icon>
                 </div>
             </div>
